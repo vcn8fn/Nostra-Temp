@@ -1,0 +1,677 @@
+<html>
+<script type="text/ng-template" id="searchTemplate.html">
+  <a ng-if="match.label.type == 'track'">
+      <div class="search-item">
+          <img ng-src="{{match.label.artwork_url}}" width="16">
+          <span bind-html-unsafe="match.label.title | typeaheadHighlight:query"></span>
+          <span> - </span>
+          <span bind-html-unsafe="match.label.artist | typeaheadHighlight:query"></span>
+          <span class="mute pull-right">Track</span>
+      </div>
+  </a>
+  <a ng-if="match.label.type == 'profile'">
+      <div class="search-profile-item">
+        <div class="search-top">
+            <img ng-src="{{match.label.profile_picture}}" width="16">
+            <span>  </span>
+            <span bind-html-unsafe="match.label.username | typeaheadHighlight:query"></span>
+            <span class="mute pull-right">User</span>
+        </div>
+        <div class="search-bottom">
+            <span class="mute" bind-html-unsafe="match.label.name | typeaheadHighlight:query"></span>
+        </div>
+      </div>
+  </a>
+</script>
+<!-- BEGIN HEADER INNER -->
+<!-- !DOC: add 'container' in class after 'page-header-inner' -->
+<div class="page-header-inner">
+	<!-- BEGIN LOGO -->
+	<!-- <div class="page-logo"> -->
+		<!-- <a href="#/dashboard.html"> -->
+		<!-- <img src="/assets/admin/layout2/img/logo-default.png" alt="logo" class="logo-default"/> -->
+		<!-- </a> -->
+		<!-- <div class="menu-toggler sidebar-toggler"> -->
+			<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+		<!-- </div> -->
+	<!-- </div> -->
+	<!-- END LOGO -->
+	<!-- BEGIN RESPONSIVE MENU TOGGLER -->
+<!-- 	<a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+	</a> -->
+	<!-- END RESPONSIVE MENU TOGGLER -->
+	<!-- BEGIN PAGE ACTIONS -->
+	<!-- DOC: Remove "hide" class to enable the page header actions -->
+	<!-- <div class="page-actions"> -->
+		<!-- <div class="btn-group">
+			<button type="button" class="btn btn-circle red-pink dropdown-toggle" data-toggle="dropdown">
+			<i class="icon-bar-chart"></i>&nbsp;<span class="hidden-sm hidden-xs">New&nbsp;</span>&nbsp;<i class="fa fa-angle-down"></i>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li>
+					<a href="#">
+					<i class="icon-user"></i> New User </a>
+				</li>
+				<li>
+					<a href="#">
+					<i class="icon-present"></i> New Event <span class="badge badge-success">4</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+					<i class="icon-basket"></i> New order </a>
+				</li>
+				<li class="divider">
+				</li>
+				<li>
+					<a href="#">
+					<i class="icon-flag"></i> Pending Orders <span class="badge badge-danger">4</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+					<i class="icon-users"></i> Pending Users <span class="badge badge-warning">12</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-circle green-haze dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-plus"></i>&nbsp;<span class="hidden-sm hidden-xs">New&nbsp;</span>&nbsp;<i class="fa fa-angle-down"></i>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li>
+					<a href="#">
+					<i class="icon-docs"></i> New Post </a>
+				</li>
+				<li>
+					<a href="#">
+					<i class="icon-tag"></i> New Comment </a>
+				</li>
+				<li>
+					<a href="#">
+					<i class="icon-share"></i> Share </a>
+				</li>
+				<li class="divider">
+				</li>
+				<li>
+					<a href="#">
+					<i class="icon-flag"></i> Comments <span class="badge badge-success">4</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+					<i class="icon-users"></i> Feedbacks <span class="badge badge-danger">2</span>
+					</a>
+				</li>
+			</ul>
+		</div> -->
+	<!-- </div> -->
+	<!-- END PAGE ACTIONS -->
+	<!-- BEGIN PAGE TOP -->
+
+
+    <div class="page-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+        	<a href="#/dashboard"><img class="nostra-header-nav pull-left" src="/assets/global/img/NostrajamusOfficialLogos/PNG/NostrajamusOfficialLogos-04 (DARK).png"></a>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nostra-nav-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- <a class="navbar-brand page-scroll" href="#/dashboard"> -->
+                <!-- </a> -->
+                
+                <a class="navbar-brand page-scroll" href="#/">
+        			<div class="nostra-style-white">nostra</div>
+        			<div class="nostra-style-red">jam</div>
+        			<div class="nostra-style-white">us</div>
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+
+            <div class="collapse navbar-collapse top-menu" id="nostra-nav-collapse">
+
+            	<!-- Start Pre-Login Header -->
+            	<ul class="nav navbar-nav navbar-right" ng-if="!authState.user">
+            		<li class="dropdown" id="">
+						<a href="#/" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
+						<span class="title">Home</span>
+						</a>
+						<br>
+					</li>
+            		<li class="dropdown" id="">
+						<a href="#/discover" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
+						<span class="title">Discover</span>
+						</a>
+						<br>
+					</li>
+            		<!-- <li class="dropdown" id=""> -->
+						<!-- <a href="#/dashboard" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true"> -->
+						<!--<i class="icon-home"></i>-->
+						<!-- <span class="title">Contests</span> -->
+						<!-- </a> -->
+						<!-- <br> -->
+					<!-- </li> -->
+					<li class="dropdown" id="" ng-if="!authState.user">
+						<a href="#" class="dropdown-toggle" ng-click="setFirst()" data-toggle="modal" data-target="#tutorialModal" data-close-others="true">
+						<!--<i class="icon-share"></i>-->
+						<span class="title">How To Play</span>
+						</a>
+						<br>
+					</li>
+					<!-- <li class="dropdown" id="">
+						<a href="#/leaderboard" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
+						<span class="title">Leaderboard</span>
+						</a>
+						<br>
+					</li> -->
+					<!-- END TODO DROPDOWN -->
+					<!-- BEGIN USER LOGIN DROPDOWN -->
+					<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown style -->
+					<li>
+						<a href="#" data-toggle="modal" data-target="#registerModal">
+							<button class="btn btn-default btn-lg nostra-register">Register</button>
+						</a>
+						<br>
+					</li>
+					<li class="dropdown" id="">
+						<a href="#" class="dropdown-toggle" data-toggle="modal" data-target="#loginModal">
+						<span class="title nostra-login">Log In</span>
+						</a>
+						<br>
+					</li>	
+                </ul>
+				<!-- End Pre-Login Header -->
+
+				<!-- Start Post-Login Header -->
+                <ul class="nav navbar-nav navbar-right" ng-if="authState.user">
+                	<li class="dropdown" id="">
+						<a href="#/" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
+						<span class="title">Home</span>
+						</a>
+						<br>
+					</li>
+                	<li class="dropdown" id="">
+						<a href="#/discover" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
+						<!--<i class="icon-share"></i>-->
+						<span class="title">Discover</span>
+						</a>
+						<br>
+					</li>
+                    <!-- <li class="dropdown" id=""> -->
+						<!-- <a href="#/dashboard" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true"> -->
+						<!--<i class="icon-home"></i>-->
+						<!-- <span class="title">Contests</span> -->
+						<!-- </a> -->
+						<!-- <br> -->
+					<!-- </li> -->
+					<li class="dropdown" id="">
+						<a href="#/leaderboard" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
+						<!--<i class="icon-trophy"></i>-->
+						<span class="title">Leaders</span>
+						</a>
+						<br>
+					</li>
+					<!-- END TODO DROPDOWN -->
+					<!-- BEGIN USER LOGIN DROPDOWN -->
+					<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown style -->
+					<li class="dropdown dropdown-user dropdown-dark">
+						<a href="#" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown" data-close-others="true">
+						<img class="profile-pic-md" src="{{getProfilePicture(api.data.myUser.profile_picture)}}" ng-show="getProfilePicture(api.data.myUser.profile_picture)">
+	                    <i class="fa fa-user fa-lg" ng-hide="getProfilePicture(api.data.myUser.profile_picture)"></i>
+						<span class="username username-hide-on-mobile">
+						{{authState.user}} </span>
+						<i class="fa fa-angle-down"></i>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-default">
+							<li>
+								<a href="#/profile/me/dashboard">
+								<i class="icon-user"></i> Profile </a>
+							</li>
+							<!--<li class="divider">-->
+							<!--</li>-->
+							<li>
+						        <a href="#/how">
+                                <i class="icon-question"></i> How To Play </a>
+					        </li>
+                            <li>
+								<a href="#/message">
+								<i class="icon-paper-plane"></i> Contact Us </a>
+							</li>
+<!-- 							<li>
+								<a href="#/jams">
+								<i class="icon-playlist"></i> My Jams </a>
+							</li>
+							<li>
+								<a href="#/contests">
+								<i class="icon-clock"></i> Current Contests </a>
+							</li>
+							<li>
+								<a href="#/history">
+								<i class="icon-check"></i> History </a>
+							</li> -->
+							<li class="divider">
+							<li>
+								<a href="#/profile/me/account">
+								<i class="icon-settings"></i> Settings </a>
+							</li>
+							</li>
+							<li ng-controller="authController" ng-click="logout()">
+								<a href="#">
+									<i class="icon-key"></i> Log Out
+								</a>
+							</li>
+						</ul>
+					</li>
+                </ul>
+                <!-- End Post-Login Header -->
+
+                <!--<div class="col-sm-3 col-md-3 pull-right">-->
+                    <form class="navbar-form navbar-search pull-right" role="search" ng-submit="search(searchQuery)">
+                        <div class="input-group jamus-search">
+                            <input type="text" name="" class="form-control" id="search" type="text" placeholder="Search" ng-model="searchQuery" typeahead="track for track in search($viewValue)" typeahead-on-select='onSearchSelect($item, $model, $label)' typeahead-template-url="searchTemplate.html" typeahead-input-formatter="formatLabel($model)">
+                            <div class="input-group-btn">
+                            	<!-- btn-search -->
+                                <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search white"></span></button>
+                            </div>
+                        </div>
+                    </form>
+                <!--</div>-->
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    </div>
+
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="authController">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header title-bg">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title white" id="registerModalLabel">Register</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form name="registationForm" novalidate>
+                                <div class="row">
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="First Name *" ng-model="first_name" required data-validation-required-message="Please enter your name.">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Last Name *" ng-model="last_name" required data-validation-required-message="Please enter your name.">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control text-center" placeholder="Username (alias) *" ng-model="user_name" required data-validation-required-message="Please enter your email address.">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control text-center" placeholder="Your Email *" ng-model="email" required data-validation-required-message="Please enter your email address.">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="password" class="form-control text-center" placeholder="Password *" ng-model="password1" required data-validation-required-message="Please enter a password">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" placeholder="Confirm password *" ng-model="password2" required data-validation-required-message="Please enter a confirmation password">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="col-lg-12 text-center">
+                                        <div id="success"></div>
+                                        <button type="submit" class="btn btn-xl" ng-click="register($event)">Jam With Us</button>
+                                        <div id="errors"></div>
+                                    </div>
+
+                                    <div class="col-lg-12 text-center">
+	                                	<br>
+	                                	<b>Already a member? <a href="#" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Log In</span></a></b>
+	                                </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="modal-footer title-bg">
+                    <button type="button" class="btn btn-default red-nostra-modal" data-dismiss="modal">Sweet.</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="authController">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header title-bg">
+	                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                <h4 class="modal-title white" id="loginModalLabel">Log In</h4>
+	            </div>
+	            <div class="modal-body">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <form name="registationForm" novalidate>
+	                            <div class="row">
+	                                <div class="col-md-offset-2 col-md-8">
+	                                    <div class="form-group">
+	                                        <input type="text" class="form-control" placeholder="Username *" ng-model="user_name" required data-validation-required-message="Please enter your name.">
+	                                        <p class="help-block text-danger"></p>
+	                                    </div>
+	                                </div>
+	                                <div class="col-md-offset-2 col-md-8">
+	                                    <div class="form-group">
+	                                        <input type="password" class="form-control" placeholder="Password *" ng-model="password1" required data-validation-required-message="Please enter your name.">
+	                                        <p class="help-block text-danger"></p>
+	                                    </div>
+	                                </div>
+
+	                                <div class="clearfix"></div>
+	                                <div class="col-lg-12 text-center">
+	                                    <div id="success"></div>
+	                                    <button type="submit" class="btn btn-xl" ng-click="login()">Log In</button>
+	                                    <div id="errors"></div>
+	                                </div>
+
+	                                <div class="col-lg-12 text-center">
+	                                	<br>
+	                                	<b>Not a member yet? <a href="#" data-toggle="modal" data-target="#registerModal" data-dismiss="modal"><span>Register Now!</span></a></b>
+	                                	<br>
+	                                	<b>Forgot Password? <a href="#" data-toggle="modal" data-target="#forgotModal" data-dismiss="modal">Click Here</span></a></b>
+	                                </div>
+
+	                            </div>
+	                        </form>
+	                    </div>
+	                </div>
+	            </div>
+	            <!-- <div class="modal-footer title-bg">
+	                <button type="button" class="btn btn-default red-nostra-modal" data-dismiss="modal">Sweet.</button>
+	            </div> -->
+	        </div>
+	    </div>
+	</div>
+
+	<div class="modal fade" id="forgotModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="authController">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header title-bg">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title white" id="forgotModalLabel">Forgot Password</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form name="registationForm" novalidate>
+                                <div class="row">
+                                    
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control text-center" placeholder="Email *" ng-model="emailForgot" required data-validation-required-message="Please enter an email">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <div class="col-lg-12 text-center">
+                                        <div id="success"></div>
+                                        <button type="submit" class="btn btn-xl" ng-click="getPassword(emailForgot)">Get Password</button>
+                                        <div id="errors"></div>
+                                    </div>
+
+                                    <div class="col-lg-12 text-center">
+	                                	<br>
+	                                	<b>Have an account? <a href="#" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Log In</span></a></b>
+	                                </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="modal-footer title-bg">
+                    <button type="button" class="btn btn-default red-nostra-modal" data-dismiss="modal">Sweet.</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+	<div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="authController">
+	    <div class="modal-dialog modal-tutorial">
+	        <div class="modal-content">
+	            <div class="modal-header title-bg">
+	                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                <h4 class="modal-title white" id="tutorialModalLabel" ng-hide="firstTime">How To Play</h4>
+	                <h4 class="modal-title white" id="tutorialModalLabel" ng-show="firstTime">First Time Here?</h4>
+	            </div>
+	            <div class="modal-body" style="margin-bottom:0;padding-bottom:0;">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        
+							<div id="myCarousel" class="carousel slide">
+								<ol class="carousel-indicators">
+									<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+									<li data-target="#myCarousel" data-slide-to="1"></li>
+									<li data-target="#myCarousel" data-slide-to="2"></li>
+									<li data-target="#myCarousel" data-slide-to="3"></li>
+								</ol>
+								<!-- Carousel items -->
+								<div class="carousel-inner">
+									<div class="active item">
+										<img class="img-tutorial-carousel" src="/assets/global/img/tutorial/how_to_play_1.png">
+									</div>
+									<div class="item">
+										<img class="img-tutorial-carousel" src="/assets/global/img/tutorial/how_to_play_2.png">
+									</div>
+									<div class="item">
+										<img class="img-tutorial-carousel" src="/assets/global/img/tutorial/how_to_play_3.png">
+									</div>
+									<div class="item">
+										<h4 class="green">Good Examples</h4>
+						                <h4 class="text-center">(uploaded by record label or artist)</h4>
+						                <div class="row">
+						                    <div class="col-md-6">
+						                        <img src="/assets/global/img/scoring/good1.png" class="scoring-img" alt=""/>
+						                    </div>
+						                    <div class="col-md-6">
+						                        <img src="/assets/global/img/scoring/good2.png" class="scoring-img" alt=""/>
+						                    </div>
+						                </div>
+
+						                <hr/>
+						                <h4 class="red">Bad Examples</h4>
+						                <h4 class="text-center">(uploaded by random internet stranger)</h4>
+						                <div class="row">
+						                    <div class="col-md-6">
+						                        <img src="/assets/global/img/scoring/bad1.png" class="scoring-img" alt=""/>
+						                    </div>
+						                    <div class="col-md-6">
+						                        <img src="/assets/global/img/scoring/bad2.png" class="scoring-img" alt=""/>
+						                    </div>
+						                </div>
+									</div>
+								</div>
+								<!-- Carousel nav -->
+								<div class="btn" ng-disabled="slide==1">
+									<a class="carousel-control left" id="leftButton" href="#myCarousel" data-slide="prev" ng-click="getPrev()">&lsaquo;</a>
+								</div>
+								<div class="btn" ng-disabled="slide==4">
+									<a class="carousel-control right" id="rightButton" href="#myCarousel" data-slide="next" ng-click="getNext()">&rsaquo;</a>
+								</div>
+							</div>
+
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="modal-footer" id="footer-tutorial" style="margin-top:0;padding-top:0;">
+	            	<!-- ng-show="slide==4" -->
+	            	<div class="text-center">
+			            <button type="button" class="btn btn-default red-nostra-modal btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#registerModal"> <span class="Sica-Bold">Play Now <b>>></b></span></button>
+			            <div class="Sica-Regular">Win prizes and discover awesome music.</div>
+			        </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+    <!--<div class="page-top"> <!-- Change this maybe to make navbar clear -->
+		<!--<div class="container">-->
+			<!--<!-- <img class="logo-nostra" src="/assets/global/img/jamus_invert.png"> -->
+			<!--<a href="#/dashboard"><div class="nostra">NostraJAMus</div></a>-->
+
+			<!--<!-- minimize -->
+<!--<!-- 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">-->
+	            <!--<span class="sr-only">Toggle navigation</span>-->
+	            <!--<span class="icon-bar"></span>-->
+	            <!--<span class="icon-bar"></span>-->
+	            <!--<span class="icon-bar"></span>-->
+	        <!--</button>-->
+	        <!--<div class="navbar-collapse collapse">-->
+	          <!--<ul class="nav navbar-nav">-->
+	            <!--<li class="active"><a href="#">Home</a></li>-->
+	            <!--<li><a href="#about">About</a></li>-->
+	            <!--<li><a href="#contact">Contact</a></li>-->
+	            <!--<li class="dropdown">-->
+	              <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>-->
+	              <!--<ul class="dropdown-menu">-->
+	                <!--<li><a href="#">Action</a></li>-->
+	                <!--<li><a href="#">Another action</a></li>-->
+	                <!--<li><a href="#">Something else here</a></li>-->
+	                <!--<li class="divider"></li>-->
+	                <!--<li class="dropdown-header">Nav header</li>-->
+	                <!--<li><a href="#">Separated link</a></li>-->
+	                <!--<li><a href="#">One more separated link</a></li>-->
+	              <!--</ul>-->
+	            <!--</li>-->
+	          <!--</ul>-->
+	          <!--<ul class="nav navbar-nav navbar-right">-->
+	            <!--<li><a href="#">Default</a></li>-->
+	          <!--</ul>-->
+	        <!--</div> -->
+			<!--<!-- minimize -->
+
+			<!--<!-- BEGIN HEADER SEARCH BOX -->
+			<!--<!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
+	<!--<!-- 		<form class="search-form search-form-expanded" action="#" method="GET">-->
+				<!--<div class="input-group">-->
+					<!--<input type="text" class="form-control" placeholder="Search..." name="query">-->
+					<!--<span class="input-group-btn">-->
+					<!--<a href="javascript:;" class="btn submit"><i class="icon-magnifier"></i></a>-->
+					<!--</span>-->
+				<!--</div>-->
+			<!--</form> -->
+			<!--<!-- END HEADER SEARCH BOX -->
+			<!--<!-- BEGIN TOP NAVIGATION MENU -->
+			<!--<div class="top-menu">-->
+				<!--<ul class="nav navbar-nav pull-right">-->
+					<!--<!-- BEGIN TODO DROPDOWN -->
+					<!--<li class="dropdown" id="">-->
+						<!--<a href="#/dashboard" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">-->
+						<!--<i class="icon-home"></i>-->
+						<!--<span class="title">Contests</span>-->
+						<!--</a>-->
+						<!--<br>-->
+					<!--</li>-->
+					<!--<li class="dropdown" id="">-->
+						<!--<a href="#/leaderboard" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">-->
+						<!--<i class="icon-trophy"></i>-->
+						<!--<span class="title">Leaderboard</span>-->
+						<!--</a>-->
+						<!--<br>-->
+					<!--</li>-->
+					<!--<li class="dropdown" id="">-->
+						<!--<a href="#/leagues" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">-->
+						<!--<i class="icon-share"></i>-->
+						<!--<span class="title">Groups</span>-->
+						<!--</a>-->
+						<!--<br>-->
+					<!--</li>-->
+					<!--<li class="dropdown" id="">-->
+						<!--<a href="#/how" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">-->
+						<!--<i class="icon-question"></i>-->
+						<!--<span class="title">Learn</span>-->
+						<!--</a>-->
+						<!--<br>-->
+					<!--</li>-->
+					<!--<!-- END TODO DROPDOWN -->
+					<!--<!-- BEGIN USER LOGIN DROPDOWN -->
+					<!--<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown style -->
+					<!--<li class="dropdown dropdown-user dropdown-dark">-->
+						<!--<a href="#" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown" data-close-others="true">-->
+						<!--<img alt="" class="img-circle" src="{{api.data.myUser.profile_picture}}"/> <!-- /assets/admin/layout2/img/avatar3_small.jpg -->
+						<!--<span class="username username-hide-on-mobile">-->
+						<!--{{authState.user}} </span>-->
+						<!--<i class="fa fa-angle-down"></i>-->
+						<!--</a>-->
+						<!--<ul class="dropdown-menu dropdown-menu-default">-->
+							<!--<li>-->
+								<!--<a href="#/profile/dashboard">-->
+								<!--<i class="icon-user"></i> Profile </a>-->
+							<!--</li>-->
+							<!--<li class="divider">-->
+							<!--</li>-->
+							<!--<li>-->
+								<!--<a href="#/message">-->
+								<!--<i class="icon-paper-plane"></i> Contact Us </a>-->
+							<!--</li>-->
+<!--<!-- 							<li>-->
+								<!--<a href="#/jams">-->
+								<!--<i class="icon-playlist"></i> My Jams </a>-->
+							<!--</li>-->
+							<!--<li>-->
+								<!--<a href="#/contests">-->
+								<!--<i class="icon-clock"></i> Current Contests </a>-->
+							<!--</li>-->
+							<!--<li>-->
+								<!--<a href="#/history">-->
+								<!--<i class="icon-check"></i> History </a>-->
+							<!--</li> -->
+							<!--<li class="divider">-->
+							<!--</li>-->
+							<!--<li ng-controller="authController" ng-click="logout()">-->
+								<!--<a href="/">-->
+									<!--<i class="icon-key"></i> Log Out-->
+								<!--</a>-->
+							<!--</li>-->
+						<!--</ul>-->
+					<!--</li>-->
+					<!--<!-- END USER LOGIN DROPDOWN -->
+				<!--</ul>-->
+			<!--</div>-->
+		<!--</div>-->
+		<!--<!-- END TOP NAVIGATION MENU -->
+	<!--</div>-->
+
+
+
+
+	<!-- END PAGE TOP -->
+</div>
+<!-- END HEADER INNER/ -->

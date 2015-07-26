@@ -1,0 +1,157 @@
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="authController">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header title-bg">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title white" id="myModalLabel">Log In</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form name="registationForm" novalidate>
+                            <div class="row">
+                                <div class="col-md-offset-2 col-md-8">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Username *" ng-model="user_name" required data-validation-required-message="Please enter your name.">
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-offset-2 col-md-8">
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" placeholder="Password *" ng-model="password1" required data-validation-required-message="Please enter your name.">
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <div class="col-lg-12 text-center">
+                                    <div id="success"></div>
+                                    <button type="submit" class="btn btn-xl" ng-click="login()">Log In</button>
+                                    <div id="errors"></div>
+                                </div>
+
+                                <div class="col-lg-12 text-center">
+                                	<br>
+                                	<b>Not a member yet? <a href="#" data-toggle="modal" data-target="#registerModal" data-dismiss="modal">Register Now!</span></a></b>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer title-bg">
+                <button type="button" class="btn btn-default red-nostra-modal" data-dismiss="modal">Sweet.</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<!--BEGIN PAGE HEADER-->
+<!-- <h3 class="page-title">
+	Home
+</h3> -->
+
+<!-- 815 -->
+<!-- <div class="Sica-Regular" ng-init="track = getFeaturedTrack(649)">
+	In celebraton of our upcoming trip to Collision, we wanted to share a best of Nostrajamus to showcase the incredible selections of our users this past month.
+	Track: {{track}}
+	Featured: {{featuredTrack}}
+	<data-ng-include="'/assets/tpl/jamus-track-item.html'">
+</div> -->
+
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div ng-init="filterContests(contests)">
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<!-- BEGIN PORTLET-->
+			<div class="portlet light">
+				<div class="portlet-title">
+					<div class="caption caption-md">
+						<i class="icon-bar-chart font-green-haze hide"></i>
+						<span class="caption-subject font-nostra bold uppercase">Join a Contest</span>
+					</div>
+				</div>
+				<!-- START No Contests -->
+				<div ng-show="noOpenContests(openContests)" class="Sica-SemiBold text-center">
+					There aren't any open contests currently. We're updating Nostrajamus and more contests will start in the near future. Until then, feel free to browse the rest of the contests, playlists, and profiles!
+					<br><br>
+					<span class="Sica-SemiBoldItalic">Jam on ...</span>
+				</div>
+				<!-- End No Contests -->
+				<!-- START New Contests -->
+				<div ng-hide="noOpenContests(openContests)" class="table-scrollable table-scrollable-borderless">
+					<ul class="col-md-4 img-list" ng-repeat="contest in openContests | limitTo:3">
+						<li ng-if="authState.user">
+							<a href="#/opencontests/{{contest.id}}">
+								<div class="row jamus-open-item">
+								    <div class="track-img-wrapper col-md-12 col-sm-12 col-xs-12 text-center" style="background-image: url({{ getCroppedImageUrl(contest.contest_picture) }});">
+								    </div>
+								    <span class="text-content"><span class="nostra-description">{{contest.description}}</span></span>
+								</div>
+							</a>
+							<div class="text-center Sica-Regular"><b>Submit by:</b><br>{{getFullDate(contest.start_time)}} (ET)</div>
+						</li>
+
+						<li ng-if="!authState.user">
+							<a href="#" data-toggle="modal" data-target="#registerModal">
+								<div class="row jamus-open-item">
+								    <div class="track-img-wrapper col-md-12 col-sm-12 col-xs-12 text-center" style="background-image: url({{ getCroppedImageUrl(contest.contest_picture) }});">
+								    </div>
+								    <span class="text-content"><span class="nostra-description">{{contest.description}}</span></span>
+								</div>
+							</a>
+							<div class="text-center Sica-Regular"><b>Submit by:</b><br>{{getFullDate(contest.start_time)}} (ET)</div>
+						</li>
+					</ul>
+				</div>
+				<!-- END New Contests -->
+			</div>
+			<!-- END PORTLET-->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<!-- BEGIN PORTLET-->
+			<div class="portlet light">
+				<div class="portlet-title">
+					<div class="caption caption-md">
+						<i class="icon-bar-chart font-green-haze hide"></i>
+						<span class="caption-subject font-nostra bold uppercase">Contest Playlists</span>
+					</div>
+					<span class="shuffle-wrapper fa-stack" ng-click="playRandom()">
+						<i class="fa fa-circle fa-stack-2x fa-2x"></i>
+						<i class="fa fa-random fa-stack-1x fa-inverse"></i>
+						<!-- <span class="fa-stack fa-lg">
+						  <i class="fa fa-circle fa-stack-2x"></i>
+						  <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
+						</span> -->
+					</span>
+				</div>
+				<!-- <div class="portlet-body"> -->
+					<div class="table-scrollable table-scrollable-borderless">
+						<perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="10" min-scrollbar-length="100%">
+							<ul class="col-md-4 img-list" ng-repeat="contest in inProgressContests">
+								<li data-ng-include="'/assets/tpl/jamus-contest-item-square.html'"></li>
+							</ul>
+							<ul class="col-md-4 img-list" ng-repeat="contest in completedContests">
+								<li data-ng-include="'/assets/tpl/jamus-contest-item-square.html'"></li>
+							</ul>
+						</perfect-scrollbar>
+					</div>
+				<!-- </div> -->
+			</div>
+			<!-- END PORTLET-->
+		</div>
+	</div>
+
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
+<script>
+	// Index.init();    
+	// Tasks.initDashboardWidget();
+</script>
+<!-- BEGIN MAIN JS & CSS

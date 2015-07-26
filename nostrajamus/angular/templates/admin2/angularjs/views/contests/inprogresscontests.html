@@ -1,0 +1,285 @@
+<!--BEGIN PAGE HEADER-->
+<h3 class="page-title">
+	{{contestInfo.title}}
+</h3>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h2 class="section-heading Sica-ExtraBold">{{contestInfo.title}}</h2>
+        <div class="section-subheading Sica-Bold">{{contestInfo.description}}</div>
+        <!-- <div class="section-subheading text-muted">Submission Deadline In <span id="countdown-inprogress"></span></div> -->
+        <br>
+    </div>
+</div>
+
+<div ng-controller="AccordionDemoCtrl">
+    <!-- <p>
+        <button class="btn btn-success" ng-click="status.open = !status.open">Toggle last panel</button>
+        <button class="btn btn-warning" ng-click="status.isFirstDisabled = ! status.isFirstDisabled">Enable / Disable first panel</button>
+    </p>
+     -->
+    <accordion close-others="oneAtATime">
+        <accordion-group is-open="status.open">
+            <accordion-heading>
+                <div ng-click="toggleOpen()">
+                    <i class="fa fa-globe">&nbsp</i>Contest Summary<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+                </div>
+            </accordion-heading>
+            <!-- Begin Table -->
+                <!-- <div class="row" ng-controller="AdvancedDatatablesDemoCtrl"> -->
+                    <!-- <div class="portlet box red-nostra"> -->
+                        <div class="portlet-body dark-bg-nostra">
+                            <div class="row">
+                                <div class="col-lg-6 text-center">
+                                    <p><h5>Contest Entries</h5>{{contestEntries.count}}</p>
+                                    <p><h5>Entry Fee</h5>${{contestInfo.entry_fee}}</p>
+                                    <p><h5>Prize</h5> {{contestInfo.prize}}</p>
+                                </div>
+                                <div class="col-lg-6 text-center">
+                                    <p><h5>Start Time (ET)</h5> {{contestInfo.start_time}}</p>
+                                    <p><h5>End Time (ET)</h5> {{contestInfo.end_time}}</p>
+                                    <p><h5>Status</h5> In Progress</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row" ng-show="{{contestInfo.soundcloud_playlist_link}}">
+                                <div class="col-lg-12 text-center">
+                                <p><h5>Check out the SoundCloud playlist for this contest</h5> <a href="{{contestInfo.soundcloud_playlist_link}}" target="_blank">{{contestInfo.soundcloud_playlist_link}}</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                <!-- </div> -->
+            <!-- End Table -->
+        </accordion-group>
+    </accordion>
+</div>
+
+<!-- <div class="row" ng-controller="AdvancedDatatablesDemoCtrl"> -->
+	<!-- <div class="col-md-12"> -->
+		<!-- BEGIN EXAMPLE TABLE PORTLET-->
+		<!-- <div class="portlet box red-nostra">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-globe"></i>Contest Summary
+				</div>
+				<div class="tools">
+					<a href="javascript:;" class="reload">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body dark-bg-nostra">
+                <div class="row">
+                    <div class="col-lg-6 text-center">
+                        <p><h5>Contest Entries</h5>{{contestEntries.count}}</p>
+                        <p><h5>Entry Fee</h5>${{contestInfo.entry_fee}}</p>
+                        <p><h5>Prize</h5> {{contestInfo.prize}}</p>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <p><h5>Start Time (ET)</h5> {{contestInfo.start_time}}</p>
+                        <p><h5>End Time (ET)</h5> {{contestInfo.end_time}}</p>
+                        <p><h5>Status</h5> In Progress</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row" ng-show="{{contestInfo.soundcloud_playlist_link}}">
+                    <div class="col-lg-12 text-center">
+                    <p><h5>Check out the SoundCloud playlist for this contest</h5> <a href="{{contestInfo.soundcloud_playlist_link}}" target="_blank">{{contestInfo.soundcloud_playlist_link}}</a></p>
+                    </div>
+                </div>
+			</div>
+		</div> -->
+		<!-- END EXAMPLE TABLE PORTLET-->
+	<!-- </div> -->
+<!-- </div> -->
+
+<div class="row" ng-hide="myRank==-1">
+    <h3 align="center">Your Pick</h3>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="text-center rank-holder">
+                <br><br><br><br>
+                <h1 class="counter">{{myRank}}</h1>
+            </div>
+        </div>
+        <div class="col-md-8" ng-init="track = myEntry">
+            <div data-ng-include="'/assets/tpl/jamus-track-item.html'"></div>
+            <!--<iframe width="100%" height="166" scrolling="no" frameborder="no" ng-src="{{getSrc(myEntry)}}"></iframe>-->
+        </div>
+        <div class="col-md-2 text-center rank-holder">
+            <br><br><br><br>
+            <!-- <div><a href="#/profile/{{myEntry.user.id}}/dashboard">{{myEntry.user.username}}</a></div> -->
+            <div>{{myEntry.jam_points}} Jam Points</div>
+            <button type="button" class="btn btn-default dark-nostra-modal" data-toggle="modal" ng-click="updateModal(myEntry)" data-target="#graphModal">Details</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8 text-center">
+            <h4>SHARE Your Link and WIN:</h4>
+            <input type="text" class="form-control text-center" value="{{getReferralLink(myInfo.id, myEntry.track.sc_id)}}" style="width:100%"></input>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+	<h3 align="center">Current Standings</h3>
+<!--     <div class="row" ng-repeat="entry in contestEntries.results | startFrom:currentPage*pageSize | limitTo:pageSize"> -->
+    <div class="row" ng-repeat="track in contestEntries.results | limitTo:pageSize">
+        <div class="col-md-2">
+            <div class="text-center rank-holder">
+                <br><br><br><br>
+                <h1 class="counter">{{$index+getRanks()+1}}</h1>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div data-ng-include="'/assets/tpl/jamus-track-item.html'"></div>
+        </div>
+        <div class="col-md-2 text-center rank-holder">
+            <br><br><br><br>
+            <div><a href="#/profile/{{track.user.id}}/dashboard">{{track.user.username}}</a></div>
+            <div>{{track.jam_points}} Jam Points</div>
+            <button type="button" class="btn btn-default dark-nostra-modal" data-toggle="modal" ng-click="updateModal(track)" data-target="#graphModal">Details</button>
+            <!-- <button type="button" class="btn btn-default" data-toggle="modal" data-title="{{ entry.track.title }}" data-id="{{ entry.id }}" data-sc-id="{{ entry.sc_id }}" data-target="#graphModal" data-ip="{{ entry.initial_playback_count }}" data-cp="{{ entry.current_playback_count }}" data-fc="{{ entry.current_follower_count }}" data-album-art="{{ entry.track.artwork_url }}">Details</button> -->
+        </div>
+    </div>
+</div>
+<br>
+<div class="row" align="center">
+    <button class="btn btn-primary red-nostra" ng-disabled="currentPage == 1" ng-click="prevPage()">
+        Prev
+    </button>
+    {{currentPage}}/{{numberOfPages()}}
+    <button class="btn btn-primary red-nostra" ng-disabled="currentPage>=contestEntries.count/pageSize" ng-click="nextPage()">
+        Next
+    </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="graphModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center title-bg">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title white">{{ modalEntry.track.title }}</h4>
+            </div>
+
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <img width="200" height="200" src="{{ getCroppedImageUrl(modalEntry.track.artwork_url) }}" id="album_art" alt=""/>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <h5>Initial Playcount</h5>
+                        <p id="ip">{{ insertCommas(modalEntry.initial_playback_count) }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <br/>
+                        <h4 class="green" id="percentage">+ {{ insertCommas(modalEntry.percentage_increase) }} %</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Current Playcount</h5>
+                        <p id="cp">{{ insertCommas(modalEntry.current_playback_count) }}</p>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <h5>Followers</h5>
+                        <p id="fc">{{ insertCommas(modalEntry.initial_follower_count) }}</p>
+                    </div>
+
+                </div>
+            <div class="modal-footer title-bg">
+                <button type="button" class="btn btn-default red-nostra-modal" id="closeModalBtn" data-dismiss="modal">Sweet.</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="row" align="center">
+    <button class="btn btn-primary red-nostra" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+        Prev
+    </button>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <button class="btn btn-primary red-nostra" ng-disabled="currentPage>=contestEntries.results.length/pageSize-1" ng-click="currentPage=currentPage+1">
+        Next
+    </button>
+</div> -->
+<!-- END MAIN CONTENT -->
+
+<!-- Modal -->
+<div class="modal fade" id="officialTrackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Official Tracks Only</h4>
+            </div>
+            <div class="modal-body">
+                <h4 class="green">Good Examples</h4>
+                <h4 class="center">(uploaded by record label or artist)</h4>
+                <img src="/assets/global/img/scoring/good1.png" class="scoring-img" alt=""/>
+                <img src="/assets/global/img/scoring/good2.png" class="scoring-img" alt=""/>
+
+                <hr/>
+                <h4 class="red">Bad Examples</h4>
+                <h4 class="center">(uploaded by random internet stranger)</h4>
+                <img src="/assets/global/img/scoring/bad1.png" class="scoring-img" alt=""/>
+                <img src="/assets/global/img/scoring/bad2.png" class="scoring-img" alt=""/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Sweet.</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="shareLargeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header title-bg">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title white" id="myModalLabel">Share This Song</h4>
+            </div>
+            <div class="modal-body text-center">
+                <h4>Tell your friends!</h4>
+                <br>
+                <h5>Share this link:</h5>
+                <!-- <br> -->
+                <!-- {{getReferralLink(track.track.id)}} -->
+                <input type="text" class="form-control text-center" value="{{referLink}}" style="width:100%"></input>
+                <br><br>
+                Follow us:
+                <br><br>
+                <a href="https://twitter.com/NostraJAMusUVA" target="_blank"><i class="fa fa-twitter fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://www.facebook.com/nostrajamus.music" target="_blank"><i class="fa fa-facebook fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://soundcloud.com/nostrajamus" target="_blank"><i class="fa fa-soundcloud fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://play.spotify.com/user/collinwaldoch/playlist/0QmOLxaXpiDhToT2jxTVgL?play=true&utm_source=open.spotify.com&utm_medium=open" target="_blank"><i class="fa fa-spotify fa-2x social-media-icons"></i></a>&nbsp
+                <a href="http://nostrajamus.tumblr.com/" target="_blank"><i class="fa fa-tumblr fa-2x social-media-icons"></i></a>
+            </div>
+            <div class="modal-footer title-bg">
+                <button type="button" class="btn btn-default red-nostra-modal" data-dismiss="modal">Sweet.</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BEGIN MAIN JS -->
+<script>
+	function AdvancedDatatablesDemoCtrl($scope) {
+		// CompletedContests.init();
+	}
+    function AccordionDemoCtrl($scope) {
+        $scope.oneAtATime = true;
+
+        $scope.status = {
+            isFirstOpen: true,
+            isFirstDisabled: false
+        };
+    };
+</script>
+<!-- END MAIN JS

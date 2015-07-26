@@ -1,0 +1,209 @@
+<div id="scrollArea">
+<!--<h3 class="page-title">-->
+	<!--Leaderboard-->
+<!--</h3>-->
+
+<!--BEGIN PAGE HEADER-->
+<!--<h3 class="page-title">-->
+	<!--Leaderboard &lt;!&ndash; <small><a ng-click="gotoTastemakers()">Top Tastemakers</a> and <a ng-click="gotoUpcomingJams()">Upcoming Jams</a></small> &ndash;&gt;-->
+<!--</h3>-->
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<!-- <div class="row" ng-controller="AdvancedDatatablesDemoCtrl"> -->
+	<!-- <div class="col-md-12"> -->
+		<!-- BEGIN EXAMPLE TABLE PORTLET-->
+<!-- 		<div class="portlet box red-nostra">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-trophy"></i>Leaderboard
+				</div>
+				<div class="tools">
+					<a href="javascript:;" class="reload">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<table class="table table-striped table-bordered table-hover" id="sample_3">
+					<thead>
+						<tr>
+							<th>
+								Username
+							</th>
+							<th>
+								JAM Points
+							</th>
+							<th>
+								Joined
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								vanGOGH
+							</td>
+							<td>
+								9101.3
+							</td>
+							<td>
+								01/01/2015
+							</td>
+						</tr>
+						<tr>
+							<td>
+								t-mipari
+							</td>
+							<td>
+								8749.4
+							</td>
+							<td>
+								11/03/2014
+							</td>
+						</tr>
+						<tr>
+							<td>
+								tolmert
+							</td>
+							<td>
+								6830.9
+							</td>
+							<td>
+								10/31/2014
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div> -->
+		<!-- END EXAMPLE TABLE PORTLET-->
+	<!-- </div> -->
+<!-- </div> -->
+<!-- <a id="tastemakers"></a> -->
+
+<div class="row">
+	<div class="col-md-12 col-sm-12">
+		<!-- BEGIN PORTLET-->
+		<div class="portlet light ">
+			<div class="portlet-title">
+				<div class="caption caption-md">
+					<i class="icon-bar-chart font-green-haze hide"></i>
+					<span class="caption-subject font-nostra bold uppercase">Top Tastemakers</span>
+					<span class="caption-helper hide">weekly stats...</span>
+				</div>
+				<!--<div class="portlet-title tabbable-line pull-right">-->
+					<!--<ul class="nav nav-tabs">-->
+						<!--<li class="active">-->
+							<!--<a data-target="#tab_1_1" data-toggle="tab">-->
+							<!--Upcoming Jams </a>-->
+						<!--</li>-->
+						<!--<li>-->
+							<!--<a data-target="#tab_1_2" data-toggle="tab">-->
+							<!--Top Tastemakers </a>-->
+						<!--</li>-->
+					<!--</ul>-->
+				<!--</div>-->
+			</div>
+			<div class="portlet-body" style="margin-bottom:10%;">
+
+				<div class="row leader-rows" ng-repeat="leaders in chunkedLeaders">
+					<div class="buttons-leader">
+					    <div ng-class="{'button-leader active-leader': leader.hover || leader.my_entries[0].track.sc_id == player.data.currentTrackData.sc_id, 'button-leader': !leader.hover || leader.my_entries[0].track.sc_id != player.data.currentTrackData.sc_id}" ng-repeat="leader in leaders" ng-mouseover="hoverExpand(leader)" ng-mouseleave="hoverShrink(leader)">
+					        <a href="#/profile/{{leader.id}}/dashboard"><h5 class="Sica-Bold">{{leader.username}}</h5></a>
+					        <span class="leaders-profile-pic" style="margin-top:-15px;cursor:pointer;" ng-click="goToProfile(leader.id)">
+					        	<img class="profile-pic-md-plus" src="{{getProfilePicture(leader.profile_picture)}}" ng-show="getProfilePicture(leader.profile_picture)">
+				                <i class="fa fa-user fa-3x red profile-pic-default-md-plus" ng-hide="getProfilePicture(leader.profile_picture)"></i>
+					        </span>
+					        <div class="Sica-Regular leaders-jam-points" style="margin-top:30px; margin-bottom:-15px;">{{leader.total_jam_points}}</div>
+					        <p ng-init="track = leader.my_entries[0]">
+					        	<div data-ng-include="'/assets/tpl/jamus-leader-item.html'"></div>
+					        	<!-- DOC: To add ellipsis back in, uncomment below statement and remove css for 'leader-track-item' class in jamus-leader-item.html -->
+						        <!-- <div class="text-center leaders-more-btn" ng-click="goToProfile(leader.id)">
+						        	<i class="fa fa-ellipsis-h fa-2x"></i>
+						        </div> -->
+					        </p>
+					    </div>
+					</div>
+				</div>
+
+                <!-- <div class="table-scrollable table-scrollable-borderless">
+                    <table class="table table-hover table-light">
+                        <thead>
+                            <tr>
+                                <th width="33%" class="text-center">
+                                    Rank
+                                </th>
+                                <th width="33%" class="text-center">
+                                    Tastemaker
+                                </th>
+                                <th width="33%" class="text-center">
+                                    Jam Points
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="leader in leaders">
+                            <th width="33%" class="text-center">
+                                {{$index+1}}
+                            </th>
+                            <td class="bold text-center" width="33%">
+                                <div class="row">
+                                    <div class="col-md-2 col-md-offset-2">
+	                                        <img class="profile-pic-sm" src="{{getProfilePicture(leader.profile_picture)}}" ng-show="getProfilePicture(leader.profile_picture)">
+	                                        <i class="fa fa-user fa-lg" ng-hide="getProfilePicture(leader.profile_picture)"></i>
+                                    </div>
+                                    <a href="#/profile/{{leader.id}}/dashboard"><div class="col-md-6">{{leader.username}}</div></a>
+                                </div>
+                            </td>
+                            <td width="33%" class="text-center">
+                                <span class="bold font-nostra-dark">{{leader.total_jam_points}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div> -->
+
+			</div>
+		</div>
+		<!-- END PORTLET-->
+	</div>
+</div>
+
+<div class="modal fade" id="shareLargeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header title-bg">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title white" id="myModalLabel">Share This Song</h4>
+            </div>
+            <div class="modal-body text-center">
+                <h4>Tell your friends!</h4>
+                <br>
+                <h5>Share this link:</h5>
+                <!-- <br> -->
+                <!-- {{getReferralLink(track.track.id)}} -->
+                <input type="text" class="form-control text-center" value="{{referLink}}" style="width:100%"></input>
+                <br><br>
+                Follow us:
+                <br><br>
+                <a href="https://twitter.com/NostraJAMusUVA" target="_blank"><i class="fa fa-twitter fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://www.facebook.com/nostrajamus.music" target="_blank"><i class="fa fa-facebook fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://soundcloud.com/nostrajamus" target="_blank"><i class="fa fa-soundcloud fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://play.spotify.com/user/collinwaldoch/playlist/0QmOLxaXpiDhToT2jxTVgL?play=true&utm_source=open.spotify.com&utm_medium=open" target="_blank"><i class="fa fa-spotify fa-2x social-media-icons"></i></a>&nbsp
+                <a href="http://nostrajamus.tumblr.com/" target="_blank"><i class="fa fa-tumblr fa-2x social-media-icons"></i></a>
+            </div>
+            <div class="modal-footer title-bg">
+                <button type="button" class="btn btn-default red-nostra-modal" data-dismiss="modal">Sweet.</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <a id="upcomingjams"></a> -->
+
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS -->
+<script>
+	// function AdvancedDatatablesDemoCtrl($scope) {
+	// 	Leagues.init();
+	// }
+</script>
+<!-- END MAIN JS

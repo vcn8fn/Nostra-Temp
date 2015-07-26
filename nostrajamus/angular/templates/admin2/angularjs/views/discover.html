@@ -1,0 +1,456 @@
+<div id="scrollArea">
+
+<!--BEGIN PAGE HEADER-->
+<!--<h3 class="page-title">-->
+	<!--Leaderboard &lt;!&ndash; <small><a ng-click="gotoTastemakers()">Top Tastemakers</a> and <a ng-click="gotoUpcomingJams()">Upcoming Jams</a></small> &ndash;&gt;-->
+<!--</h3>-->
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+
+<!-- <a id="tastemakers"></a> -->
+
+<!-- <div align="right" ng-controller="authController" ng-if="!authState.user" style="float:right">Already registered? <a href="#" class="red" data-toggle="modal" data-target="#loginModal">LOG IN</a></div> -->
+<!--<h3 class="page-title">-->
+	<!--Discover &lt;!&ndash; <small ng-show="!authState.user">The World of Predictions</small> &ndash;&gt;-->
+<!--</h3>-->
+
+<div class="row" ng-if="referralTrack">
+	<div class="col-md-12 col-sm-12">
+		<!-- BEGIN PORTLET-->
+		<div class="portlet light ">
+			<div class="portlet-title">
+				<div class="caption caption-md">
+					<span class="caption-subject font-nostra bold uppercase">Thanks for playing my song!</span>
+				</div>
+			</div>
+
+			<div class="portlet-body" ng-init="track = referralTrack">
+				<div class="row">
+					<div class="col-md-10 col-sm-10">
+						<!-- BEGIN PORTLET-->
+						<div class="portlet light">
+							<div class="portlet-body text-center">
+								
+								<div data-ng-include="'/assets/tpl/jamus-track-item.html'"></div>
+
+							</div>
+						</div>
+						<!-- END PORTLET-->
+					</div>
+					<div class="col-md-2 text-center rank-holder">
+			            <br><br><br><br><br>
+			            <div><a href="#/profile/{{myInfo.id}}/dashboard">{{myInfo.username}}</a></div>
+			            <div>{{referralTrack.jam_points}} Jam Points</div>
+			            <button type="button" class="btn btn-default dark-nostra-modal" data-toggle="modal" ng-click="updateModal(track)" data-target="#graphModal">Details</button>
+			        </div>
+				</div>
+			</div>
+		</div>
+		<!-- END PORTLET-->
+	</div>
+</div>
+
+<div class="row" ng-if="viewTrack">
+    <div class="col-md-12 col-sm-12">
+		<!-- BEGIN PORTLET-->
+		<div class="portlet light ">
+            <div class="portlet-title">
+				<div class="caption caption-md">
+					<span class="caption-subject font-nostra bold uppercase">All Time Stats for {{track.track.title}} by {{track.track.user.username}}</span>
+				</div>
+			</div>
+			<div class="portlet-body" ng-init="track = viewTrack">
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<!-- BEGIN PORTLET-->
+						<div class="portlet light">
+							<div class="portlet-body text-center">
+
+								<div data-ng-include="'/assets/tpl/jamus-track-item.html'"></div>
+
+							</div>
+						</div>
+						<!-- END PORTLET-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END PORTLET-->
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12 col-sm-12">
+		<!-- BEGIN PORTLET-->
+		<div class="portlet light ">
+			<div class="portlet-title">
+				<div class="caption caption-md">
+					<i class="icon-bar-chart font-green-haze hide"></i>
+					<span class="caption-subject font-nostra bold uppercase">Trending Tracks</span>
+					<span class="caption-helper hide">weekly stats...</span>
+				</div>
+				<div class="actions pull-right">
+                    <div class="btn-group btn-group-devided" data-toggle="buttons">
+                        <label class="btn btn-transparent grey-salsa btn-circle btn-sm active" ng-click="getDaily()">
+                        <input type="radio" name="options" class="toggle">Today</label>
+                        <label class="btn btn-transparent grey-salsa btn-circle btn-sm" ng-click="getWeekly()">
+                        <input type="radio" name="options" class="toggle">Week</label>
+                        <label class="btn btn-transparent grey-salsa btn-circle btn-sm" ng-click="getMonthly()">
+                        <input type="radio" name="options" class="toggle">Month</label>
+                        <label class="btn btn-transparent grey-salsa btn-circle btn-sm" ng-click="getAllTime()">
+                        <input type="radio" name="options" class="toggle">All Time</label>
+                    </div>
+                </div>
+			</div>
+			<div class="portlet-body">
+
+				<div class="tab-content">
+					<div class="tab-pane active" id="tab_1_1">
+                        <div class="row" ng-show="timeSelect=='daily'">
+							<div class="col-md-12 col-sm-12">
+								<!-- BEGIN PORTLET-->
+								<div class="portlet light">
+									<div class="portlet-body text-center">
+										<div ng-repeat="track in trending | limitTo:pageSize">
+
+                                            <div data-ng-include="'/assets/tpl/jamus-track-item.html'"></div>
+
+											<!--<hr>-->
+										</div>
+
+										<button class="btn btn-primary red-nostra" ng-disabled="currentPage == 1" ng-click="prevPage()">
+									        Prev
+									    </button>
+									    {{currentPage}}/{{numberOfPages()}}
+									    <button class="btn btn-primary red-nostra" ng-disabled="currentPage>=trending.count/pageSize" ng-click="nextPage()">
+									        Next
+									    </button>
+									</div>
+								</div>
+								<!-- END PORTLET-->
+							</div>
+						</div>
+					</div>
+
+					<div class="tab-pane active" id="tab_1_2">
+						<div class="row" ng-show="timeSelect=='weekly'">
+							<div class="col-md-12 col-sm-12">
+								<!-- BEGIN PORTLET-->
+								<div class="portlet light">
+									<!-- <div class="portlet-title">
+										<div class="caption caption-md">
+											<i class="icon-bar-chart font-green-haze hide"></i>
+											<span class="caption-subject font-nostra bold uppercase">Upcoming Jams</span>
+											<span class="caption-helper hide">weekly stats...</span>
+										</div>
+									</div> -->
+									<div class="portlet-body text-center">
+										<div ng-repeat="track in trending | limitTo:pageSize">
+                                            <div data-ng-include="'/assets/tpl/jamus-track-item.html'"></div>
+
+                                            <!--<div class="row" align="center">-->
+												<!--<div class="col-md-10 col-sm-10 col-xs-20">-->
+													<!--<iframe width="90%" height="155" scrolling="no" frameborder="no" ng-src="{{getSrc(track)}}"></iframe>-->
+												<!--</div>-->
+												<!--<br><br>-->
+												<!--<div class="col-md-1 col-sm-1 col-xs-2 text-center">-->
+													<!--<h5>Jam Points</h5><br>{{insertCommas(track.jam_points)}}-->
+												<!--</div>-->
+											<!--</div>-->
+											<!--<div class="row list-separated text-center">-->
+												<!--<div class="col-md-3 col-sm-3 col-xs-6">-->
+													<!--<div class="font-grey-mint font-sm">-->
+														<!--Initial Playcount-->
+													<!--</div>-->
+													<!--<div class="uppercase font-hg font-red-flamingo">-->
+														<!--{{insertCommas(track.initial_playback_count)}} <span class="font-lg font-grey-mint"></span>-->
+													<!--</div>-->
+												<!--</div>-->
+												<!--<div class="col-md-3 col-sm-3 col-xs-6">-->
+													<!--<div class="font-grey-mint font-sm">-->
+														<!--Play Increase-->
+													<!--</div>-->
+													<!--<div class="uppercase font-hg font-purple">-->
+														<!--<span class="font-lg font-grey-mint">+</span>{{insertCommas(getPlayIncrease(track))}}%-->
+													<!--</div>-->
+												<!--</div>-->
+												<!--<div class="col-md-3 col-sm-3 col-xs-6">-->
+													<!--<div class="font-grey-mint font-sm">-->
+														<!--Current Playcount-->
+													<!--</div>-->
+													<!--<div class="uppercase font-hg font-purple">-->
+														<!--{{insertCommas(track.current_playback_count)}} <span class="font-lg font-grey-mint"></span>-->
+													<!--</div>-->
+												<!--</div>-->
+												<!--<div class="col-md-3 col-sm-3 col-xs-6">-->
+													<!--<div class="font-grey-mint font-sm">-->
+														<!--Initial Followers-->
+													<!--</div>-->
+													<!--<div class="uppercase font-hg font-green-haze">-->
+														<!--{{insertCommas(track.initial_follower_count)}} <span class="font-lg font-grey-mint"></span>-->
+													<!--</div>-->
+												<!--</div>-->
+											<!--</div>-->
+											<hr>
+										</div>
+
+										<button class="btn btn-primary red-nostra" ng-disabled="currentPage == 1" ng-click="prevPage()">
+									        Prev
+									    </button>
+									    {{currentPage}}/{{numberOfPages()}}
+									    <button class="btn btn-primary red-nostra" ng-disabled="currentPage>=trending.count/pageSize" ng-click="nextPage()">
+									        Next
+									    </button>
+									</div>
+								</div>
+								<!-- END PORTLET-->
+							</div>
+						</div>
+					</div>
+						<!-- END TAB 1 -->
+					<div class="tab-pane active" id="tab_1_3">
+						<div class="row" ng-show="timeSelect=='monthly'">
+							<div class="col-md-12 col-sm-12">
+								<!-- BEGIN PORTLET-->
+								<div class="portlet light">
+									<!-- <div class="portlet-title">
+										<div class="caption caption-md">
+											<i class="icon-bar-chart font-green-haze hide"></i>
+											<span class="caption-subject font-nostra bold uppercase">Upcoming Jams</span>
+											<span class="caption-helper hide">weekly stats...</span>
+										</div>
+									</div> -->
+									<div class="portlet-body text-center">
+										<div ng-repeat="track in trending | limitTo:pageSize">
+
+                                            <div data-ng-include="'/assets/tpl/jamus-track-item.html'"></div>
+
+                                            <!--<div class="row" align="center">-->
+												<!--<div class="col-md-10 col-sm-10 col-xs-20">-->
+													<!--<iframe width="90%" height="155" scrolling="no" frameborder="no" ng-src="{{getSrc(track)}}"></iframe>-->
+												<!--</div>-->
+												<!--<br><br>-->
+												<!--<div class="col-md-1 col-sm-1 col-xs-2 text-center">-->
+													<!--<h5>Jam Points</h5><br>{{insertCommas(track.jam_points)}}-->
+												<!--</div>-->
+											<!--</div>-->
+											<!--<div class="row list-separated text-center">-->
+												<!--<div class="col-md-3 col-sm-3 col-xs-6">-->
+													<!--<div class="font-grey-mint font-sm">-->
+														<!--Initial Playcount-->
+													<!--</div>-->
+													<!--<div class="uppercase font-hg font-red-flamingo">-->
+														<!--{{insertCommas(track.initial_playback_count)}} <span class="font-lg font-grey-mint"></span>-->
+													<!--</div>-->
+												<!--</div>-->
+												<!--<div class="col-md-3 col-sm-3 col-xs-6">-->
+													<!--<div class="font-grey-mint font-sm">-->
+														<!--Play Increase-->
+													<!--</div>-->
+													<!--<div class="uppercase font-hg font-purple">-->
+														<!--<span class="font-lg font-grey-mint">+</span>{{insertCommas(getPlayIncrease(track))}}%-->
+													<!--</div>-->
+												<!--</div>-->
+												<!--<div class="col-md-3 col-sm-3 col-xs-6">-->
+													<!--<div class="font-grey-mint font-sm">-->
+														<!--Current Playcount-->
+													<!--</div>-->
+													<!--<div class="uppercase font-hg font-purple">-->
+														<!--{{insertCommas(track.current_playback_count)}} <span class="font-lg font-grey-mint"></span>-->
+													<!--</div>-->
+												<!--</div>-->
+												<!--<div class="col-md-3 col-sm-3 col-xs-6">-->
+													<!--<div class="font-grey-mint font-sm">-->
+														<!--Initial Followers-->
+													<!--</div>-->
+													<!--<div class="uppercase font-hg font-green-haze">-->
+														<!--{{insertCommas(track.initial_follower_count)}} <span class="font-lg font-grey-mint"></span>-->
+													<!--</div>-->
+												<!--</div>-->
+											<!--</div>-->
+											<hr>
+										</div>
+
+										<button class="btn btn-primary red-nostra" ng-disabled="currentPage == 1" ng-click="prevPage()">
+									        Prev
+									    </button>
+									    {{currentPage}}/{{numberOfPages()}}
+									    <button class="btn btn-primary red-nostra" ng-disabled="currentPage>=trending.count/pageSize" ng-click="nextPage()">
+									        Next
+									    </button>
+									</div>
+								</div>
+								<!-- END PORTLET-->
+							</div>
+						</div>
+					</div>
+						<!-- END TAB 2 -->
+					<div class="tab-pane active" id="tab_1_4">
+						<div class="row" ng-show="timeSelect=='alltime'">
+							<div class="col-md-12 col-sm-12">
+								<!-- BEGIN PORTLET-->
+								<div class="portlet light">
+									<!-- <div class="portlet-title">
+										<div class="caption caption-md">
+											<i class="icon-bar-chart font-green-haze hide"></i>
+											<span class="caption-subject font-nostra bold uppercase">Upcoming Jams</span>
+											<span class="caption-helper hide">weekly stats...</span>
+										</div>
+									</div> -->
+									<div class="portlet-body text-center">
+										<div ng-repeat="track in trending | limitTo:pageSize">
+
+                                            <div data-ng-include="'/assets/tpl/jamus-track-item.html'"></div>
+
+                                            <!--<div class="row" align="center">-->
+												<!--<div class="col-md-10 col-sm-10 col-xs-20">-->
+													<!--<iframe width="90%" height="155" scrolling="no" frameborder="no" ng-src="{{getSrc(track)}}"></iframe>-->
+												<!--</div>-->
+												<!--<br><br>-->
+												<!--<div class="col-md-1 col-sm-1 col-xs-2 text-center">-->
+													<!--<h5>Jam Points</h5><br>{{insertCommas(track.jam_points)}}-->
+												<!--</div>-->
+											<!--</div>-->
+											<!--<div class="row list-separated text-center">-->
+												<!--<div class="col-md-3 col-sm-3 col-xs-6">-->
+													<!--<div class="font-grey-mint font-sm">-->
+														<!--Initial Playcount-->
+													<!--</div>-->
+													<!--<div class="uppercase font-hg font-red-flamingo">-->
+														<!--{{insertCommas(track.initial_playback_count)}} <span class="font-lg font-grey-mint"></span>-->
+													<!--</div>-->
+												<!--</div>-->
+												<!--<div class="col-md-3 col-sm-3 col-xs-6">-->
+													<!--<div class="font-grey-mint font-sm">-->
+														<!--Play Increase-->
+													<!--</div>-->
+													<!--<div class="uppercase font-hg font-purple">-->
+														<!--<span class="font-lg font-grey-mint">+</span>{{insertCommas(getPlayIncrease(track))}}%-->
+													<!--</div>-->
+												<!--</div>-->
+												<!--<div class="col-md-3 col-sm-3 col-xs-6">-->
+													<!--<div class="font-grey-mint font-sm">-->
+														<!--Current Playcount-->
+													<!--</div>-->
+													<!--<div class="uppercase font-hg font-purple">-->
+														<!--{{insertCommas(track.current_playback_count)}} <span class="font-lg font-grey-mint"></span>-->
+													<!--</div>-->
+												<!--</div>-->
+												<!--<div class="col-md-3 col-sm-3 col-xs-6">-->
+													<!--<div class="font-grey-mint font-sm">-->
+														<!--Initial Followers-->
+													<!--</div>-->
+													<!--<div class="uppercase font-hg font-green-haze">-->
+														<!--{{insertCommas(track.initial_follower_count)}} <span class="font-lg font-grey-mint"></span>-->
+													<!--</div>-->
+												<!--</div>-->
+											<!--</div>-->
+											<hr>
+										</div>
+
+										<button class="btn btn-primary red-nostra" ng-disabled="currentPage == 1" ng-click="prevPage()">
+									        Prev
+									    </button>
+									    {{currentPage}}/{{numberOfPages()}}
+									    <button class="btn btn-primary red-nostra" ng-disabled="currentPage>=trending.count/pageSize" ng-click="nextPage()">
+									        Next
+									    </button>
+									</div>
+								</div>
+								<!-- END PORTLET-->
+							</div>
+						</div>
+					</div>
+					<!-- END TAB 3 -->
+
+				</div>
+			</div>
+		</div>
+		<!-- END PORTLET-->
+	</div>
+</div>
+
+<!-- <a id="upcomingjams"></a> -->
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="graphModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center title-bg">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title white">{{ modalEntry.track.title }}</h4>
+            </div>
+
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <img width="200" height="200" src="{{ modalEntry.track.artwork_url }}" id="album_art" alt=""/>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <h5>Initial Playcount</h5>
+                        <p id="ip">{{ insertCommas(modalEntry.initial_playback_count) }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <br/>
+                        <h4 class="green" id="percentage">+ {{ insertCommas(modalEntry.percentage_increase) }}%</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Current Playcount</h5>
+                        <p id="cp">{{ insertCommas(modalEntry.current_playback_count) }}</p>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <h5>Followers</h5>
+                        <p id="fc">{{ insertCommas(modalEntry.initial_follower_count) }}</p>
+                    </div>
+
+                </div>
+            <div class="modal-footer title-bg">
+                <button type="button" class="btn btn-default red-nostra-modal" id="closeModalBtn" data-dismiss="modal">Sweet.</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="shareLargeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header title-bg">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title white" id="myModalLabel">Share This Song</h4>
+            </div>
+            <div class="modal-body text-center">
+                <h4>Tell your friends!</h4>
+                <br>
+                <h5>Share this link:</h5>
+                <!-- <br> -->
+                <!-- {{getReferralLink(track.track.id)}} -->
+                <input type="text" class="form-control text-center" value="{{referLink}}" style="width:100%"></input>
+                <br><br>
+                Follow us:
+                <br><br>
+                <a href="https://twitter.com/NostraJAMusUVA" target="_blank"><i class="fa fa-twitter fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://www.facebook.com/nostrajamus.music" target="_blank"><i class="fa fa-facebook fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://soundcloud.com/nostrajamus" target="_blank"><i class="fa fa-soundcloud fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://play.spotify.com/user/collinwaldoch/playlist/0QmOLxaXpiDhToT2jxTVgL?play=true&utm_source=open.spotify.com&utm_medium=open" target="_blank"><i class="fa fa-spotify fa-2x social-media-icons"></i></a>&nbsp
+                <a href="http://nostrajamus.tumblr.com/" target="_blank"><i class="fa fa-tumblr fa-2x social-media-icons"></i></a>
+            </div>
+            <div class="modal-footer title-bg">
+                <button type="button" class="btn btn-default red-nostra-modal" data-dismiss="modal">Sweet.</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS -->
+<script>
+	// function AdvancedDatatablesDemoCtrl($scope) {
+	// 	Leagues.init();
+	// }
+</script>
+<!-- END MAIN JS

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>NostraJAMus | Login</title>
+
+   <!-- Bootstrap Core CSS -->
+    <link href="/assets/nostraV1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/nostraV1/img/favicon.ico">
+
+    <!-- Custom CSS -->
+    <link href="/assets/nostraV1/css/agency.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.css"/>
+    <link href="/assets/admin/layout2/css/custom.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Custom Fonts -->
+    <link href="/assets/nostraV1/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link href="/assets/global/css/css/nostrajamus.css" id="style_components" rel="stylesheet" type="text/css"/>
+
+    <script src="http://connect.soundcloud.com/sdk.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-58603725-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="/">
+                    <div class="nostra-style-red">nostra</div>
+                    <div class="nostra-style-red">jam</div>
+                    <div class="nostra-style-red">us</div>
+                </a>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Login</h2>
+                    <h3 class="section-subheading text-muted">Not signed up yet? <a href="#" data-toggle="modal" data-target="#registerModal">Register now</a></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form name="login" id="loginForm" novalidate>
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-6">
+                                <div class="form-group">
+                                    <input name="username" type="text" class="form-control" placeholder="Username *" id="username_login" required data-validation-required-message="Please enter your username.">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input name="password" type="password" class="form-control" placeholder="Password *" id="password_login" required data-validation-required-message="Please enter your password.">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-lg-12 text-center">
+                                <div id="success"></div>
+                                <button type="submit" class="btn btn-xl">Log In</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h3 class="section-subheading text-muted">Forgot your password? <a href="#" data-toggle="modal" data-target="#forgotModal">Click here</a></h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright">Copyright &copy; NostraJAMus 2015</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li><a href="https://twitter.com/NostraJAMusVA" target="_blank"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li><a href="https://www.facebook.com/nostrajamus.music" target="_blank"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li><a href="https://soundcloud.com/nostrajamus" target="_blank"><i class="fa fa-soundcloud"></i></a>
+                        </li>
+                        <li><a href="https://play.spotify.com/user/collinwaldoch/playlist/0QmOLxaXpiDhToT2jxTVgL?play=true&utm_source=open.spotify.com&utm_medium=open" target="_blank"><i class="fa fa-spotify"></i></a>
+                        </li>
+                        <li><a href="http://nostrajamus.tumblr.com/" target="_blank"><i class="fa fa-tumblr"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+{#                        <li><a href="#">Privacy Policy</a>#}
+{#                        </li>#}
+{#                        <li><a href="#">Terms of Use</a>#}
+{#                        </li>#}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header title-bg">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title white" id="myModalLabel">Register</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <!-- <h2 class="section-heading">Jam with us</h2> -->
+                            <!-- <div class="section-subheading text-muted">Submission Deadline In <span id="countdown"></span></div>
+                            <br/><br/><br/> -->
+                            <!-- <p class="subheading-button"><button type="button" class="btn btn-default" data-toggle="modal" data-target="#officialTrackModal">Remember Official Uploads Only</button></p> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form name="contestEntryForm" id="contestEntryForm" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="First Name *" id="first_name" required data-validation-required-message="Please enter your name.">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Last Name *" id="last_name" required data-validation-required-message="Please enter your name.">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" placeholder="Your Email *" id="email" required data-validation-required-message="Please enter your email address.">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" placeholder="Username (alias) *" id="username" required data-validation-required-message="Please enter your email address.">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" placeholder="Password *" id="password1" required data-validation-required-message="Please enter a password">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" placeholder="Confirm password *" id="password2" required data-validation-required-message="Please enter a confirmation password">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <div class="col-lg-12 text-center">
+                                        <div id="success"></div>
+                                        <button type="submit" class="btn btn-xl">Jam With Us</button>
+                                        <div id="errors"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer title-bg">
+                    <button type="button" class="btn btn-default red-nostra-modal" data-dismiss="modal">Sweet.</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="forgotModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header title-bg">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title white" id="myModalLabel">Forgot Password</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <!-- <h2 class="section-heading">Jam with us</h2> -->
+                            <!-- <div class="section-subheading text-muted">Submission Deadline In <span id="countdown"></span></div>
+                            <br/><br/><br/> -->
+                            <!-- <p class="subheading-button"><button type="button" class="btn btn-default" data-toggle="modal" data-target="#officialTrackModal">Remember Official Uploads Only</button></p> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form name="forgotPasswordForm" id="forgotPasswordForm" novalidate>
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-6">
+                                        <div class="text-muted text-center">After you submit, check your email for a token to enter on the page.</div>
+                                    </div>
+                                    <br><br><br>
+                                    <div class="col-md-offset-3 col-md-6">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control text-center" placeholder="Your Email *" id="email_forgotten" required data-validation-required-message="Please enter your email address.">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <div class="col-lg-12 text-center">
+                                        <div id="success"></div>
+                                        <button type="submit" class="btn btn-xl">Submit</button>
+                                        <div id="errors"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer title-bg">
+                    <button type="button" class="btn btn-default red-nostra-modal" data-dismiss="modal">Sweet.</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/assets/nostraV1/js/jquery.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/assets/nostraV1/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="/assets/nostraV1/js/classie.js"></script>
+    <script src="/assets/nostraV1/js/cbpAnimatedHeader.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js"></script>
+
+    <script src="/assets/nostraV1/js/jqBootstrapValidation.js"></script>
+{#    <script src="/assets/nostraV1/js/contact_me.js"></script>#}
+
+    <script src="/assets/nostraV1/js/agency.js"></script>
+    <script type="text/javascript" src="/assets/nostraV1/js/nostrajamus.js"></script>
+
+</body>
+
+</html>

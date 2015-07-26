@@ -1,0 +1,293 @@
+<!--BEGIN PAGE HEADER-->
+<h3 class="page-title">
+	{{contestInfo.title}}
+</h3>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h2 class="section-heading Sica-ExtraBold">{{contestInfo.title}}</h2>
+        <div class="section-subheading Sica-Bold">{{contestInfo.description}}</div>
+        <br>
+    </div>
+</div>
+
+<!-- not hasSubmitted already: show this -->
+<div class="row" ng-if="!hasSubmitted">
+	<!-- <h3 align="center">Enter Now</h3> -->
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="col-lg-12 text-center">
+                    <div class="section-subheading text-muted">You will start collecting Jam Points as soon as this timer hits zero:</div>
+                </div>
+                <br>
+                <div class="section-subheading text-muted">Submission Deadline In <span id="countdown-open"></span></div>
+    	    </div>
+        </div>
+        <div class="row">
+            <br>
+            <div class="col-lg-12 text-center">
+                <p class="subheading-button"><button type="button" class="btn btn-default dark-nostra-modal" data-toggle="modal" data-target="#officialTrackModal">Remember: Official Uploads Only</button></p>
+            </div>
+            <br>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form name="contestEntryForm" id="contestEntryForm" novalidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-9 submit-song-form">
+                                        <input type="text" name="" class="form-control input-lg submit-song-input" id="search" type="text" placeholder="Start typing to search Soundcloud OR enter a Soundcloud url . . . Results will appear below" ng-model="asyncSelected" typeahead="track.title for track in getTracks($viewValue)" typeahead-on-select='onSelect($item, $model, $label)'>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="clearfix"></div>
+                                        <div class="col-md-12 text-center">
+                                            <div id="success"></div>
+                                            <button type="submit" class="btn btn-xl" ng-click="postTrack(origTrack, 'manual')">Join Contest</button>
+                                            <!-- <div id="errors"></div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row center">
+                                    <div class="Sica-Regular red" ng-bind="error_playback_count"></div>
+                                </div>
+
+                                <br>
+                                <div class="row">
+                                    <div class="text-center red" id="removedSong" ng-model="removedSong"><b>{{removedSong}}</b></div>
+                                    <div class="col-md-12" ng-if="track">
+                                        <!-- <div data-ng-include="'/assets/tpl/jamus-track-item.html'"></div> -->
+                                        <div data-ng-include="'/assets/tpl/jamus-track-item.html'" ng-if="track_type == 'manual'"></div>
+                                        <div data-ng-include="'/assets/tpl/jamus-recommendation-item.html'" ng-if="track_type == 'recommendations'"></div>
+                                        <br>
+                                    </div>
+                                </div>
+                                <!-- <iframe width="100%" height="83" scrolling="no" frameborder="no" ng-src="{{ track_url }}" ng-show="track_url"></iframe> -->
+                                <!-- <h4 class="text-center" ng-show="track">Play Count: {{ track.playback_count }}</h4> -->
+                                <!-- <div id="sc-embed"></div> -->
+                                <!-- <div class="text-center text-muted"><span id="playcount_embed"></span><span id="follower_count_embed"></span></div> -->
+                                </input>
+                            </div>
+                        </div>
+                    </div>
+
+                        <!-- <div class="clearfix"></div>
+                        <div class="col-md-12 text-center">
+                            <div id="success"></div>
+                            <button type="submit" class="btn btn-xl" ng-click="postTrack(origTrack)">Join Contest</button>
+                            <div id="errors"></div>
+                        </div>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-12 text-center">
+            <span class="row Sica-Bold">
+                <span ng-if="soundcloud.sc.data.user_id != ''">Here are some of your songs to get you started:</span>
+                <span ng-if="soundcloud.sc.data.user_id == ''">Having trouble finding a song? Let us help you!</span>
+                <br>
+                <img class="btn" src="/assets/global/img/btn-connect-sc-l.png" ng-click="connectSC()" ng-if="soundcloud.sc.data.user_id == ''"/>
+            </span>
+
+            <span ng-if="recommendedTracks">
+                <div class="row" id="recommendationsList" ng-repeat="track in recommendedTracks" ng-init="track_type = 'recommendations'">
+                    <!-- {{recommendedTracks}} -->
+                    <!-- <div class="col-md-12"> -->
+                        <div data-ng-include="'/assets/tpl/jamus-recommendation-item.html'"></div>
+                    <!-- </div> -->
+                </div>
+            </span>
+        </div>
+
+    </div>
+</div>
+
+<hr>
+<br>
+
+<!-- hasSubmitted already: show this -->
+<div class="row" ng-if="hasSubmitted">
+    <!-- <h3 align="center">Enter Now</h3> -->
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="col-lg-12 text-center">
+                    <div class="section-subheading text-muted">You will start collecting Jam Points as soon as this timer hits zero:</div>
+                </div>
+                <br>
+                <div class="section-subheading text-muted"><span id="countdown-submitted"></span></div>
+            </div>
+        </div>
+        <div class="row">
+            <br>
+            <div class="col-lg-12 text-center">
+                <p class="subheading-button"><b>Thanks for entering! Here's the song you submitted:</b></p>
+            </div>
+            <br>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Track Type: {{track_type}} -->
+                <!-- {{track}} -->
+                <div data-ng-include="'/assets/tpl/jamus-track-item.html'" ng-if="track_type != 'recommendations'"></div>
+                <div data-ng-include="'/assets/tpl/jamus-recommendation-item.html'" ng-if="track_type == 'recommendations'"></div>
+            </div>
+            <!-- <div class="col-md-12"> -->
+                <!-- <iframe width="100%" height="166" scrolling="no" frameborder="no" ng-src="{{getSrc(mySubmittedTrack)}}"></iframe> -->
+            <!-- </div> -->
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h4>SHARE Your Link and WIN:</h4>
+                <input type="text" class="form-control text-center" value="{{getReferralLink(myData.id, mySubmittedTrack.sc_id)}}" style="width:100%"></input>
+            </div>
+        </div>
+        <br><br><br>
+    </div>
+</div>
+
+<div class="row" ng-controller="AdvancedDatatablesDemoCtrl">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box red-nostra">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>Contest Summary
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="reload">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body dark-bg-nostra">
+                <div class="row">
+                    <div class="col-lg-6 text-center">
+                        <p><h5>Contest Entries</h5>{{contestEntries.count}}</p>
+                        <p><h5>Entry Fee</h5>${{contestInfo.entry_fee}}</p>
+                        <p><h5>Prize</h5> {{contestInfo.prize}}</p>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <p><h5>Start Time (ET)</h5> {{contestInfo.start_time}}</p>
+                        <p><h5>End Time (ET)</h5> {{contestInfo.end_time}}</p>
+                        <p><h5>Status</h5> Open (Enter Below)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+
+<!-- Modal -->
+<div class="modal fade" id="officialTrackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header title-bg">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title white" id="myModalLabel">Official Tracks Only</h4>
+            </div>
+            <div class="modal-body">
+                <h4 class="green">Good Examples</h4>
+                <h4 class="text-center">(uploaded by record label or artist)</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="/assets/global/img/scoring/good1.png" class="scoring-img" alt=""/>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="/assets/global/img/scoring/good2.png" class="scoring-img" alt=""/>
+                    </div>
+                </div>
+
+                <hr/>
+                <h4 class="red">Bad Examples</h4>
+                <h4 class="text-center">(uploaded by random internet stranger)</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="/assets/global/img/scoring/bad1.png" class="scoring-img" alt=""/>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="/assets/global/img/scoring/bad2.png" class="scoring-img" alt=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer title-bg">
+                <button type="button" class="btn btn-default red-nostra-modal" data-dismiss="modal">Sweet.</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header title-bg">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title white" id="myModalLabel">Share Your Song</h4>
+            </div>
+            <div class="modal-body text-center">
+                <h4>Boost your song's plays to win!</h4>
+                <br>
+                <h5>Share this link:</h5>
+                <!-- <br> -->
+                <input type="text" class="form-control text-center" value="{{getReferralLink(myData.id, mySubmittedTrack.sc_id)}}" style="width:100%"></input>
+                <br><br>
+                Follow us:
+                <br><br>
+                <a href="https://twitter.com/NostraJAMusUVA" target="_blank"><i class="fa fa-twitter fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://www.facebook.com/nostrajamus.music" target="_blank"><i class="fa fa-facebook fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://soundcloud.com/nostrajamus" target="_blank"><i class="fa fa-soundcloud fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://play.spotify.com/user/collinwaldoch/playlist/0QmOLxaXpiDhToT2jxTVgL?play=true&utm_source=open.spotify.com&utm_medium=open" target="_blank"><i class="fa fa-spotify fa-2x social-media-icons"></i></a>&nbsp
+                <a href="http://nostrajamus.tumblr.com/" target="_blank"><i class="fa fa-tumblr fa-2x social-media-icons"></i></a>
+            </div>
+            <div class="modal-footer title-bg">
+                <button type="button" class="btn btn-default red-nostra-modal" data-dismiss="modal">Sweet.</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="shareLargeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header title-bg">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title white" id="myModalLabel">Share This Song</h4>
+            </div>
+            <div class="modal-body text-center">
+                <h4>Tell your friends!</h4>
+                <br>
+                <h5>Share this link:</h5>
+                <!-- <br> -->
+                <!-- {{getReferralLink(track.track.id)}} -->
+                <input type="text" class="form-control text-center" value="{{referLink}}" style="width:100%"></input>
+                <br><br>
+                Follow us:
+                <br><br>
+                <a href="https://twitter.com/NostraJAMusUVA" target="_blank"><i class="fa fa-twitter fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://www.facebook.com/nostrajamus.music" target="_blank"><i class="fa fa-facebook fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://soundcloud.com/nostrajamus" target="_blank"><i class="fa fa-soundcloud fa-2x social-media-icons"></i></a>&nbsp
+                <a href="https://play.spotify.com/user/collinwaldoch/playlist/0QmOLxaXpiDhToT2jxTVgL?play=true&utm_source=open.spotify.com&utm_medium=open" target="_blank"><i class="fa fa-spotify fa-2x social-media-icons"></i></a>&nbsp
+                <a href="http://nostrajamus.tumblr.com/" target="_blank"><i class="fa fa-tumblr fa-2x social-media-icons"></i></a>
+            </div>
+            <div class="modal-footer title-bg">
+                <button type="button" class="btn btn-default red-nostra-modal" data-dismiss="modal">Sweet.</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BEGIN MAIN JS -->
+<script>
+	function AdvancedDatatablesDemoCtrl($scope) {
+		// CompletedContests.init();
+	}
+</script>
+<!-- END MAIN JS 

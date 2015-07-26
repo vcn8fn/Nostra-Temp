@@ -1,0 +1,1422 @@
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="authController">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header title-bg">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title white" id="myModalLabel">Log In</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form name="registationForm" novalidate>
+                            <div class="row">
+                                <div class="col-md-offset-2 col-md-8">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Username *" ng-model="user_name" required data-validation-required-message="Please enter your name.">
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-offset-2 col-md-8">
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" placeholder="Password *" ng-model="password1" required data-validation-required-message="Please enter your name.">
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <div class="col-lg-12 text-center">
+                                    <div id="success"></div>
+                                    <button type="submit" class="btn btn-xl" ng-click="login()">Log In</button>
+                                    <div id="errors"></div>
+                                </div>
+
+                                <div class="col-lg-12 text-center">
+                                	<br>
+                                	<b>Not a member yet? <a href="#" data-toggle="modal" data-target="#registerModal" data-dismiss="modal">Register Now!</span></a></b>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer title-bg">
+                <button type="button" class="btn btn-default red-nostra-modal" data-dismiss="modal">Sweet.</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<!--BEGIN PAGE HEADER-->
+<!-- <div align="right" ng-controller="authController" ng-if="!authState.user" style="float:right">Already registered? <a href="#" class="red" data-toggle="modal" data-target="#loginModal">LOG IN</a></div> -->
+<h3 class="page-title">
+	Contests
+</h3>
+<!-- <div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<a href="index.html">Home</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<a href="#">Lobby</a>
+		</li>
+	</ul>
+	<div class="page-toolbar">
+		<div class="btn-group pull-right">
+			<button type="button" class="btn btn-fit-height grey-salt dropdown-toggle" data-toggle="dropdown" dropdown-menu-hover data-delay="1000" data-close-others="true">
+			Start <i class="fa fa-angle-down"></i>
+			</button>
+			<ul class="dropdown-menu pull-right" role="menu">
+				<li>
+					<a href="#">
+					<i class="icon-user"></i> Find Friends </a>
+				</li>
+				<li>
+					<a href="#">
+					<i class="icon-users"></i> Find Groups <span class="badge badge-warning">12 new</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+					<i class="icon-present"></i> Join Contests <span class="badge badge-success">4 new</span>
+					</a>
+				</li>
+				<li class="divider">
+				</li>
+				<li>
+					<a href="#">
+					<i class="icon-basket"></i> Discover Songs </a>
+				</li>
+				<li>
+					<a href="#">
+					<i class="icon-flag"></i> Leaderboards <span class="badge badge-danger">4</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div> -->
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div>
+	<!-- <div class="note note-default note-bordered" ng-if="authState.user"> -->
+		<!-- <h3>Welcome, {{myData.username}}! <span class="close" data-close="note"></span></h3> -->
+		<!-- <h5> -->
+			<!-- First time here? Check out the <a href="/#how" class="red-nostra">Learn</a> page. Otherwise, check out our upcoming contests below. -->
+		<!-- </h5> -->
+		<!-- <span class="label label-success">Start</span> --> 
+	<!-- </div> -->
+	<!-- BEGIN DASHBOARD STATS -->
+	<div class="row contest-banners">
+		<div class="col-xs-4">
+			<!-- <div class="dashboard-stat"> -->
+				<div id="cf1">
+                    <div ng-if="authState.user">
+						<a href="#/opencontests/32" ng-if="contestType=='open'"><img src="assets/nostraV1/img/contest/open/3b-rowdy-remixes.png" class="img-responsive bottom"></a>
+						<a href="#/opencontests/32" ng-if="contestType=='open'"><img src="assets/nostraV1/img/contest/open/3a-rowdy-remixes.png" class="img-responsive top"></a>
+					</div>
+					<div ng-if="!authState.user">
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='open'"><img src="assets/nostraV1/img/contest/open/3b-rowdy-remixes.png" class="img-responsive bottom"></a>
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='open'"><img src="assets/nostraV1/img/contest/open/3a-rowdy-remixes.png" class="img-responsive top"></a>
+					</div>
+
+					<div ng-if="authState.user">
+						<a href="#/inprogresscontests/28" ng-if="contestType=='inprogress'"><img src="assets/nostraV1/img/contest/inprogress/4b-hip-hop.png" class="img-responsive bottom"></a>
+						<a href="#/inprogresscontests/28" ng-if="contestType=='inprogress'"><img src="assets/nostraV1/img/contest/inprogress/4a-hip-hop.png" class="img-responsive top"></a>
+					</div>
+					<div ng-if="!authState.user">
+						<a href="#" ng-if="contestType=='inprogress'"><img src="assets/nostraV1/img/contest/inprogress/4b-hip-hop.png" data-toggle="modal" data-target="#registerModal" class="img-responsive bottom"></a>
+						<a href="#" ng-if="contestType=='inprogress'"><img src="assets/nostraV1/img/contest/inprogress/4a-hip-hop.png" data-toggle="modal" data-target="#registerModal" class="img-responsive top"></a>
+					</div>
+
+					<div ng-if="authState.user">
+						<a href="#/completedcontests/3" ng-if="contestType=='completed'"><img src="assets/nostraV1/img/contest/completed/7b_-_1000_followers.png" class="img-responsive bottom"></a>
+						<a href="#/completedcontests/3" ng-if="contestType=='completed'"><img src="assets/nostraV1/img/contest/completed/7a_-_1000_followers.png" class="img-responsive top"></a>
+					</div>
+					<div ng-if="!authState.user">
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='completed'"><img src="assets/nostraV1/img/contest/completed/7b_-_1000_followers.png" class="img-responsive bottom"></a>
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='completed'"><img src="assets/nostraV1/img/contest/completed/7a_-_1000_followers.png" class="img-responsive top"></a>
+					</div>
+				</div>
+				<!-- <div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number">
+						$1M
+					</div>
+					<div class="desc">
+						Top JAMs Contest
+					</div>
+				</div>
+				<a class="more pull-right" href="#">
+				View more <i class="m-icon-swapright m-icon-white"></i>
+				</a> -->
+			<!-- </div> -->
+		</div>
+		<div class="col-xs-4">
+			<!-- <div class="dashboard-stat"> -->
+				<div id="cf2">
+					<div ng-if="authState.user">
+						<a href="#/opencontests/34" ng-if="contestType=='open'"><img src="assets/nostraV1/img/contest/open/2b_-_anything_goes.png" class="img-responsive bottom"></a>
+						<a href="#/opencontests/34" ng-if="contestType=='open'"><img src="assets/nostraV1/img/contest/open/anything_goes_mar_4_cover.png" class="img-responsive top"></a>
+					</div>
+					<div ng-if="!authState.user">
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='open'"><img src="assets/nostraV1/img/contest/open/2b_-_anything_goes.png" class="img-responsive bottom"></a>
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='open'"><img src="assets/nostraV1/img/contest/open/anything_goes_mar_4_cover.png" class="img-responsive top"></a>
+					</div>
+
+					<div ng-if="authState.user">
+						<a href="#/inprogresscontests/29" ng-if="contestType=='inprogress'"><img src="assets/nostraV1/img/contest/inprogress/5b_-_anything_goes.png" class="img-responsive bottom"></a>
+						<a href="#/inprogresscontests/29" ng-if="contestType=='inprogress'"><img src="assets/nostraV1/img/contest/inprogress/5a_-_anything_goes.png" class="img-responsive top"></a>
+					</div>
+					<div ng-if="!authState.user">
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='inprogress'"><img src="assets/nostraV1/img/contest/inprogress/5b_-_anything_goes.png" class="img-responsive bottom"></a>
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='inprogress'"><img src="assets/nostraV1/img/contest/inprogress/5a_-_anything_goes.png" class="img-responsive top"></a>
+					</div>
+					
+					<div ng-if="authState.user">
+						<a href="#/inprogresscontests/20" ng-if="contestType=='completed'"><img src="assets/nostraV1/img/contest/completed/4b_-_tropical_house.png" class="img-responsive bottom"></a>
+						<a href="#/inprogresscontests/20" ng-if="contestType=='completed'"><img src="assets/nostraV1/img/contest/completed/4a_-_tropical_house.png" class="img-responsive top"></a>
+					</div>
+					<div ng-if="!authState.user">
+						<a href="#" ng-if="contestType=='completed'"><img src="assets/nostraV1/img/contest/completed/4b_-_tropical_house.png" data-toggle="modal" data-target="#registerModal" class="img-responsive bottom"></a>
+						<a href="#" ng-if="contestType=='completed'"><img src="assets/nostraV1/img/contest/completed/4a_-_tropical_house.png" data-toggle="modal" data-target="#registerModal" class="img-responsive top"></a>
+					</div>
+				</div>
+				<!-- <div class="visual">
+					<i class="fa fa-bar-chart-o"></i>
+				</div>
+				<div class="details">
+					<div class="number">
+						$100K
+					</div>
+					<div class="desc">
+						Originals Only
+					</div>
+				</div>
+				<a class="more pull-right" href="#">
+				View more <i class="m-icon-swapright m-icon-white"></i>
+				</a> -->
+			<!-- </div> -->
+		</div>
+		<div class="col-xs-4">
+			<!-- <div class="dashboard-stat"> -->
+				<div id="cf3">
+					<div ng-if="authState.user">
+						<a href="#/opencontests/33" ng-if="contestType=='open'"><img src="assets/nostraV1/img/contest/open/3a-acoustic_descrip.png" class="img-responsive bottom"></a>
+						<a href="#/opencontests/33" ng-if="contestType=='open'"><img src="assets/nostraV1/img/contest/open/3b-acoustic_cover.png" class="img-responsive top"></a>
+					</div>
+					<div ng-if="!authState.user">
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='open'"><img src="assets/nostraV1/img/contest/open/3a-acoustic_descrip.png" class="img-responsive bottom"></a>
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='open'"><img src="assets/nostraV1/img/contest/open/3b-acoustic_cover.png" class="img-responsive top"></a>
+					</div>
+
+					<div ng-if="authState.user">
+						<a href="#/inprogresscontests/31" ng-if="contestType=='inprogress'"><img src="assets/nostraV1/img/contest/inprogress/5000_followers_descrip.png" class="img-responsive bottom"></a>
+						<a href="#/inprogresscontests/31" ng-if="contestType=='inprogress'"><img src="assets/nostraV1/img/contest/inprogress/5000_followers_standings.png" class="img-responsive top"></a>
+					</div>
+					<div ng-if="!authState.user">
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='inprogress'"><img src="assets/nostraV1/img/contest/inprogress/5000_followers_descript.png" class="img-responsive bottom"></a>
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='inprogress'"><img src="assets/nostraV1/img/contest/inprogress/5000_followers_standings.png" class="img-responsive top"></a>
+					</div>
+
+					<div ng-if="authState.user">
+						<a href="#/completedcontests/24" ng-if="contestType=='completed'"><img src="assets/nostraV1/img/contest/completed/6b_-_electronic_dance.png" class="img-responsive bottom"></a>
+						<a href="#/completedcontests/24" ng-if="contestType=='completed'"><img src="assets/nostraV1/img/contest/completed/6a_-_electronic_dance.png" class="img-responsive top"></a>
+					</div>
+					<div ng-if="!authState.user">
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='completed'"><img src="assets/nostraV1/img/contest/completed/6b_-_electronic_dance.png" class="img-responsive bottom"></a>
+						<a href="#" data-toggle="modal" data-target="#registerModal" ng-if="contestType=='completed'"><img src="assets/nostraV1/img/contest/completed/6a_-_electronic_dance.png" class="img-responsive top"></a>
+					</div>
+
+				</div>
+				<!-- <div class="visual">
+					<i class="fa fa-bar-chart-o"></i>
+				</div>
+				<div class="details">
+					<div class="number">
+						$100K
+					</div>
+					<div class="desc">
+						Originals Only
+					</div>
+				</div>
+				<a class="more pull-right" href="#">
+				View more <i class="m-icon-swapright m-icon-white"></i>
+				</a> -->
+			<!-- </div> -->
+		</div>
+		<!-- <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<div class="dashboard-stat green-haze">
+				<div class="visual">
+					<i class="fa fa-shopping-cart"></i>
+				</div>
+				<div class="details">
+					<div class="number">
+						$80K
+					</div>
+					<div class="desc">
+						The Right Remix
+					</div>
+				</div>
+				<a class="more" href="#">
+				View more <i class="m-icon-swapright m-icon-white"></i>
+				</a>
+			</div>
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<div class="dashboard-stat purple-plum">
+				<div class="visual">
+					<i class="fa fa-globe"></i>
+				</div>
+				<div class="details">
+					<div class="number">
+						$10K
+					</div>
+					<div class="desc">
+						Thousand-Entrant Free Contest
+					</div>
+				</div>
+				<a class="more" href="#">
+				View more <i class="m-icon-swapright m-icon-white"></i>
+				</a>
+			</div>
+		</div> -->
+	</div>
+	<!-- <div style="height:125px;"></div> -->
+	<!-- END DASHBOARD STATS -->
+	<!-- Modal -->
+	<div class="modal fade" id="contestDetailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header title-bg">
+	                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                <h4 class="modal-title white" id="myModalLabel">{{title}}</h4>
+	            </div>
+	            <div class="modal-body">
+            		<p><h5>Entry Fee</h5>${{entry_fee}}</p>
+					<p><h5>Prize</h5>{{prize}}</p>
+					<p><h5>Description</h5>{{description}}</p>
+					<p><h5>Start Time (ET)</h5>{{start_time}}</p>
+					<p><h5>End Time (ET)</h5>{{end_time}}</p>
+	            </div>
+	            <div class="modal-footer title-bg">
+	                <button type="button" ng-click="goToContest(status, contest_id)" class="btn btn-default red-nostra-modal" data-dismiss="modal" ng-show="status=='open' && enabled" ng-if="authState.user">Enter</button>
+	               	<button type="button" ng-click="goToContest(status, contest_id)" class="btn btn-default red-nostra-modal" data-dismiss="modal" ng-show="status=='inProgress'" ng-if="authState.user">View</button>
+	                <button type="button" ng-click="goToContest(status, contest_id)" class="btn btn-default red-nostra-modal" data-dismiss="modal" ng-show="status=='completed'" ng-if="authState.user">View</button>
+	                <span class="btn btn-default" ng-hide="enabled" ng-disabled="true">Coming Soon</span>
+	                <button type="button" data-toggle="modal" data-target="#registerModal" class="btn btn-default red-nostra-modal" data-dismiss="modal" ng-show="status=='open' && enabled" ng-if="!authState.user">Enter</button>
+	                <button type="button" data-toggle="modal" data-target="#registerModal" class="btn btn-default red-nostra-modal" data-dismiss="modal" ng-show="status=='inProgress'" ng-if="!authState.user">View</button>
+	                <button type="button" data-toggle="modal" data-target="#registerModal" class="btn btn-default red-nostra-modal" data-dismiss="modal" ng-show="status=='completed'" ng-if="!authState.user">View</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="prizeDetailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header title-bg">
+	                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                <h4 class="modal-title white" id="myModalLabel">{{title}}</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<h5>Prizes</h5>
+	            	<p ng-repeat="prize in prizes">{{prize}}</p>
+	            	... and more NostraJAMus swag!
+					<!-- <p ng-repeat="category in prizeCategories">{{category}}</p> -->
+					<!-- <p ng-repeat="value in prizeValues">{{value}}</p> -->
+	            </div>
+	            <div class="modal-footer title-bg">
+	                <button type="button" ng-click="goToContest(status, contest_id)" class="btn btn-default red-nostra-modal" data-dismiss="modal" ng-show="status=='open' && enabled" ng-if="authState.user">Enter</button>
+	               	<button type="button" ng-click="goToContest(status, contest_id)" class="btn btn-default red-nostra-modal" data-dismiss="modal" ng-show="status=='inProgress'" ng-if="authState.user">View</button>
+	                <button type="button" ng-click="goToContest(status, contest_id)" class="btn btn-default red-nostra-modal" data-dismiss="modal" ng-show="status=='completed'" ng-if="authState.user">View</button>
+	                <span class="btn btn-default" ng-hide="enabled" ng-disabled="true">Coming Soon</span>
+	                <button type="button" data-toggle="modal" data-target="#registerModal" class="btn btn-default red-nostra-modal" data-dismiss="modal" ng-show="status=='open' && enabled" ng-if="!authState.user">Enter</button>
+	                <button type="button" data-toggle="modal" data-target="#registerModal" class="btn btn-default red-nostra-modal" data-dismiss="modal" ng-show="status=='inProgress'" ng-if="!authState.user">View</button>
+	                <button type="button" data-toggle="modal" data-target="#registerModal" class="btn btn-default red-nostra-modal" data-dismiss="modal" ng-show="status=='completed'" ng-if="!authState.user">View</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+
+    <div class="row">
+        <div class="col-lg-12 text-center">
+        	<br>
+            <!-- <h2 class="section-heading">Thanks for joining our 2015 Kickoff Contest</h2> -->
+            <h6>Play count increase will be tracked when the contest begins</h6>
+            <div class="section-subheading text-muted" id="countdown"></div>
+
+        </div>
+    </div>
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<!-- BEGIN PORTLET-->
+			<div class="portlet light">
+				<div class="portlet-title">
+					<div class="caption caption-md">
+						<i class="icon-bar-chart font-green-haze hide"></i>
+						<span class="caption-subject font-nostra bold uppercase">NostraJAMus Contests</span>
+						<span class="caption-helper hide">Check out our contests...</span>
+					</div>
+					<div class="portlet-title tabbable-line pull-right">
+						<ul class="nav nav-tabs">
+							<li class="active">
+								<a data-target="#tab_1_1" data-toggle="tab" ng-click="contestType='open'">
+								Open </a>
+							</li>
+							<li>
+								<a data-target="#tab_1_2" data-toggle="tab" ng-click="contestType='inprogress'">
+								In Progress </a>
+							</li>
+							<li>
+								<a data-target="#tab_1_3" data-toggle="tab" ng-click="contestType='completed'">
+								Completed </a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="portlet-body" ng-model="contests" ng-init="filterContests(contests)">
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab_1_1">
+							<div class="table-scrollable table-scrollable-borderless">
+								<table class="table table-hover table-light">
+									<thead>
+										<tr class="uppercase">
+											<th colspan="1">
+												Open Contests
+											</th>
+											<th>
+												Entry Fee
+											</th>
+											<th>
+												Top Prize
+											</th>
+											<th>
+												Starts (ET)
+											</th>
+											<th>
+											</th>
+										</tr>
+									</thead>
+									<tr ng-repeat="openContest in openContests">
+										<!-- <td class="fit">
+											<img class="user-pic" src="{{openContest.contest_picture}}">
+										</td> -->
+										<td>
+											<!-- <img class="user-pic" src="{{getProfilePicture(openContest.contest_picture)}}"> -->
+											<a href="#" type="button" class="primary-link" data-toggle="modal" data-target="#contestDetailsModal" ng-click="passModal(openContest.title, openContest.entry_fee, openContest.prize, openContest.description, openContest.start_time, openContest.end_time, 'open', openContest.id, isEnabled(openContest.start_time))">{{openContest.title}}</a>
+										</td>
+										<td>
+											${{openContest.entry_fee}}
+										</td>
+										<td>
+											<a href="#" type="button" data-toggle="modal" data-target="#prizeDetailsModal" ng-click="passModal(openContest.title, openContest.entry_fee, openContest.prize, openContest.description, openContest.start_time, openContest.end_time, 'open', openContest.id, isEnabled(openContest.start_time))">{{openContest.prize}}</a>
+										</td>
+										<td>
+											{{openContest.start_time}}
+										</td>
+										<td align="right">
+											<a href="#/opencontests/{{openContest.id}}">
+												<span class="btn btn-default red-nostra" ng-show="isEnabled(openContest.start_time)" ng-if="authState.user">Enter</span>
+												<span class="btn btn-default" ng-hide="isEnabled(openContest.start_time)" ng-disabled="true">Coming Soon</span>
+											</a>
+											<span class="btn btn-default red-nostra" ng-show="isEnabled(openContest.start_time)" data-toggle="modal" data-target="#registerModal" ng-if="!authState.user">Enter</span>
+										</td>
+									</tr>
+								</table>
+
+								<hr>
+
+								<table class="table table-hover table-light" align="center">
+									<!-- <tr> -->
+										<div class="col-md-offset-3 col-md-6">
+	                                        <input type="text" class="form-control" id="suggestion" placeholder="Can't find a contest that you like? Here's a chance to submit your own." ng-model="suggestion">
+	                                    </div>
+	                                    <div class="clearfix"></div>
+	                                    <br>
+	                                    <div class="text-center" width="100%">
+		                                	<button type="submit" class="btn btn-md red-nostra" ng-click="enterSuggestion(suggestion)">Submit</button>
+		                                	<div ng-model="suggestThanks" class="font-nostra" value=""><b>{{suggestThanks}}</b></div>
+		                                </div>
+									<!-- </tr> -->
+								</table>
+
+							</div>
+						</div>
+						<!-- End Tab 1 -->
+						<div class="tab-pane" id="tab_1_2">
+							<div class="table-scrollable table-scrollable-borderless">
+								<table class="table table-hover table-light">
+									<thead>
+										<tr class="uppercase">
+											<th colspan="1">
+												In Progress Contests
+											</th>
+											<th>
+												Entry Fee
+											</th>
+											<th>
+												Top Prize
+											</th>
+											<th>
+												Ends (ET)
+											</th>
+											<th>
+											</th>
+										</tr>
+									</thead>
+									<tr ng-repeat="inProgressContest in inProgressContests">
+<!-- 										<td class="fit">
+											<img class="user-pic" src="{{inProgressContest.contest_picture}}">
+										</td> -->
+										<td>
+											<!-- <img class="user-pic" src="{{getProfilePicture(inProgressContest.contest_picture)}}"> -->
+											<a href="#" type="button" class="primary-link" data-toggle="modal" data-target="#contestDetailsModal" ng-click="passModal(inProgressContest.title, inProgressContest.entry_fee, inProgressContest.prize, inProgressContest.description, inProgressContest.start_time, inProgressContest.end_time, 'inProgress', inProgressContest.id, isEnabled(inProgressContest.start_time))">{{inProgressContest.title}}</a>
+										</td>
+										<td>
+											${{inProgressContest.entry_fee}}
+										</td>
+										<td>
+											<a href="#" type="button" data-toggle="modal" data-target="#prizeDetailsModal" ng-click="passModal(inProgressContest.title, inProgressContest.entry_fee, inProgressContest.prize, inProgressContest.description, inProgressContest.start_time, inProgressContest.end_time, 'inProgress', inProgressContest.id, isEnabled(inProgressContest.start_time))">{{inProgressContest.prize}}</a>
+										</td>
+										<td>
+											{{inProgressContest.end_time}}
+										</td>
+										<td align="right">
+											<a href="#/inprogresscontests/{{inProgressContest.id}}">
+												<span class="btn btn-default red-nostra" ng-show="{{inProgressContest.is_live}}"ng-if="authState.user">View</span>
+											</a>
+											<span class="btn btn-default red-nostra" data-toggle="modal" data-target="#registerModal" ng-show="{{inProgressContest.is_live}}" ng-if="!authState.user">View</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<!-- End Tab 2 -->
+						<div class="tab-pane" id="tab_1_3">
+							<div class="table-scrollable table-scrollable-borderless">
+								<table class="table table-hover table-light">
+									<thead>
+										<tr class="uppercase">
+											<th colspan="1">
+												Completed Contests
+											</th>
+											<th>
+												Entry Fee
+											</th>
+											<th>
+												Top Prize
+											</th>
+											<th>
+												Ended (ET)
+											</th>
+											<th>
+											</th>
+										</tr>
+									</thead>
+									<tr ng-repeat="completedContest in completedContests">
+										<td>
+											<!-- <img class="user-pic" src="{{getProfilePicture(completedContest.contest_picture)}}"> -->
+											<a href="#" type="button" class="primary-link" data-toggle="modal" data-target="#contestDetailsModal" ng-click="passModal(completedContest.title, completedContest.entry_fee, completedContest.prize, completedContest.description, completedContest.start_time, compeletedContest.end_time, 'completed', completedContest.id, isEnabled(completedContest.start_time))">
+											{{completedContest.title}}</a>
+										</td>
+										<td>
+											${{completedContest.entry_fee}}
+										</td>
+										<td>
+											<a href="#" type="button" data-toggle="modal" data-target="#prizeDetailsModal" ng-click="passModal(completedContest.title, completedContest.entry_fee, completedContest.prize, completedContest.description, completedContest.start_time, completedContest.end_time, 'completed', completedContest.id, isEnabled(completedContest.start_time))">{{completedContest.prize}}</a>
+										</td>
+										<td>
+											{{completedContest.end_time}}
+										</td>
+										<td align="right">
+											<a href="#/completedcontests/{{completedContest.id}}">
+												<span class="btn btn-default red-nostra" ng-if="authState.user">View</span>
+											</a>
+											<span class="btn btn-default red-nostra" data-toggle="modal" data-target="#registerModal" ng-if="!authState.user">View</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<!-- End Tab 3 -->
+					</div>
+				</div>
+			</div>
+			<!-- END PORTLET-->
+		</div>
+	</div>
+
+	<div class="row" ng-if="authState.user">
+		<div class="col-md-12 col-sm-12">
+			<!-- BEGIN PORTLET-->
+			<div class="portlet light">
+				<div class="portlet-title">
+					<div class="caption caption-md">
+						<i class="icon-bar-chart font-green-haze hide"></i>
+						<span class="caption-subject font-nostra bold uppercase">My Contests</span>
+						<span class="caption-helper hide">Check out our contests...</span>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="tab-content">
+						<div class="table-scrollable table-scrollable-borderless">
+							<table class="table table-hover table-light">
+								<thead>
+									<tr class="uppercase">
+										<th colspan="1">
+											Contests
+										</th>
+										<th>
+											Entry Fee
+										</th>
+										<th>
+											Top Prize
+										</th>
+										<th>
+											Dates (ET)
+										</th>
+										<th>
+										</th>
+									</tr>
+								</thead>
+								<tr ng-repeat="myContest in myContestInfo">
+									<td>
+										<!-- <img class="user-pic" src="{{getProfilePicture(myContest.contest_picture)}}"> -->
+										<a href="#" type="button" class="primary-link" data-toggle="modal" data-target="#contestDetailsModal" ng-click="passModal(myContest.title, myContest.entry_fee, myContest.prize, myContest.description, myContest.start_time, myContest.end_time, 'inProgress', myContest.id, isEnabled(myContest.start_time))">{{myContest.title}}</a>
+									</td>
+									<td>
+										${{myContest.entry_fee}}
+									</td>
+									<td>
+										<a href="#" type="button" data-toggle="modal" data-target="#prizeDetailsModal" ng-click="passModal(myContest.title, myContest.entry_fee, myContest.prize, myContest.description, myContest.start_time, myContest.end_time, 'inProgress', myContest.id, isEnabled(myContest.start_time))">{{myContest.prize}}</a>
+									</td>
+									<td>
+										{{myContest.start_time}} - {{myContest.end_time}}
+									</td>
+									<td align="right">
+										<a href="#/completedcontests/{{myContest.id}}"><span class="btn btn-default red-nostra" ng-show="{{myContest.is_live}}">View</span></a>
+										<a href="#/completedcontests/{{myContest.id}}"><span class="btn btn-default red-nostra" ng-hide="{{myContest.is_live}}">View</span></a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END PORTLET-->
+		</div>
+	</div>
+
+	<!-- <div class="row">
+		<div class="col-md-12 col-sm-12"> -->
+			<!-- BEGIN PORTLET-->
+			<!-- <div class="portlet light">
+				<div class="portlet-title tabbable-line">
+					<div class="caption caption-md">
+						<i class="icon-globe font-green-haze hide"></i>
+						<span class="caption-subject font-green-haze bold uppercase">Contests</span>
+					</div>
+					<ul class="nav nav-tabs">
+						<li class="active">
+							<a href="" data-target="#tab_1_1" data-toggle="tab">
+							Open </a>
+						</li>
+						<li>
+							<a href="" data-target="#tab_1_2" data-toggle="tab">
+							In Progress </a>
+						</li>
+						<li>
+							<a href="" data-target="#tab_1_3" data-toggle="tab">
+							Completed </a>
+						</li>
+					</ul>
+				</div>
+				<div class="portlet-body"> -->
+					<!--BEGIN TABS-->
+					<!-- <div class="tab-content">
+						<div class="tab-pane active" id="tab_1_1">
+							<table class="table table-striped table-bordered table-hover" id="sample_3">
+								<thead>
+									<tr>
+										<th>
+											Contest
+										</th>
+										<th>
+											Entries
+										</th>
+										<th>
+											Prize
+										</th>
+										<th>
+											Starts
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											EDM
+										</td>
+										<td>
+											100
+										</td>
+										<td>
+											$100
+										</td>
+										<td>
+											Sat. 8:00 PM
+										</td>
+										<td>
+											<div class="btn btn-default red-nostra btn-xs btn-center">Enter</div>
+										</td>
+									</tr>
+								</tbody>
+							</table> -->
+							<!-- <div class="scroller" style="height: 306px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+								<ul class="feeds">
+									<li>
+										<div class="col1">
+											<div class="cont">
+												<div class="cont-col1">
+													<div class="label label-sm label-success">
+														<i class="fa fa-bell-o"></i>
+													</div>
+												</div>
+												<div class="cont-col2">
+													<div class="desc">
+														Contest <span class="label label-sm label-info">
+														Take action <i class="fa fa-share"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col2">
+											<div class="date">
+												Just now
+											</div>
+										</div>
+									</li>
+									<li>
+										<a href="javascript:;">
+											<div class="col1">
+												<div class="cont">
+													<div class="cont-col1">
+														<div class="label label-sm label-success">
+															<i class="fa fa-bell-o"></i>
+														</div>
+													</div>
+													<div class="cont-col2">
+													<div class="desc">
+														Contest <span class="label label-sm label-info">
+														Take action <i class="fa fa-share"></i>
+														</span>
+													</div>
+													</div>
+												</div>
+											</div>
+											<div class="col2">
+												<div class="date">
+													20 mins
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<div class="col1">
+											<div class="cont">
+												<div class="cont-col1">
+													<div class="label label-sm label-danger">
+														<i class="fa fa-bolt"></i>
+													</div>
+												</div>
+												<div class="cont-col2">
+													<div class="desc">
+														Contest
+														Take action <i class="fa fa-share"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col2">
+											<div class="date">
+												24 mins
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="col1">
+											<div class="cont">
+												<div class="cont-col1">
+													<div class="label label-sm label-info">
+														<i class="fa fa-bullhorn"></i>
+													</div>
+												</div>
+												<div class="cont-col2">
+													<div class="desc">
+														Contest
+														Take action <i class="fa fa-share"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col2">
+											<div class="date">
+												30 mins
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="col1">
+											<div class="cont">
+												<div class="cont-col1">
+													<div class="label label-sm label-success">
+														<i class="fa fa-bullhorn"></i>
+													</div>
+												</div>
+												<div class="cont-col2">
+													<div class="desc">
+														Contest
+														Take action <i class="fa fa-share"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col2">
+											<div class="date">
+												40 mins
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="col1">
+											<div class="cont">
+												<div class="cont-col1">
+													<div class="label label-sm label-warning">
+														<i class="fa fa-plus"></i>
+													</div>
+												</div>
+												<div class="cont-col2">
+													<div class="desc">
+														Contest
+														Take action <i class="fa fa-share"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col2">
+											<div class="date">
+												1.5 hours
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="col1">
+											<div class="cont">
+												<div class="cont-col1">
+													<div class="label label-sm label-success">
+														<i class="fa fa-bell-o"></i>
+													</div>
+												</div>
+												<div class="cont-col2">
+													<div class="desc">
+														Contest
+														Take action <i class="fa fa-share"></i>
+														</span>
+															Web server hardware needs to be upgraded. <span class="label label-sm label-default ">
+														Overdue </span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col2">
+											<div class="date">
+												2 hours
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div> -->
+						<!-- </div>
+						<div class="tab-pane active" id="tab_1_2">
+							<table class="table table-striped table-bordered table-hover" id="sample_2">
+								<thead>
+									<tr>
+										<th>
+											Contest
+										</th>
+										<th>
+											Entries
+										</th>
+										<th>
+											Prize
+										</th>
+										<th>
+											Starts
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											EDM
+										</td>
+										<td>
+											100
+										</td>
+										<td>
+											$100
+										</td>
+										<td>
+											Sat. 8:00 PM
+										</td>
+										<td>
+											<div class="btn btn-default red-nostra btn-xs btn-center">Enter</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tab-pane active" id="tab_1_3">
+							<table class="table table-striped table-bordered table-hover" id="sample_3">
+								<thead>
+									<tr>
+										<th>
+											Contest
+										</th>
+										<th>
+											Entries
+										</th>
+										<th>
+											Prize
+										</th>
+										<th>
+											Starts
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											EDM
+										</td>
+										<td>
+											100
+										</td>
+										<td>
+											$100
+										</td>
+										<td>
+											Sat. 8:00 PM
+										</td>
+										<td>
+											<div class="btn btn-default red-nostra btn-xs btn-center">Enter</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div> -->
+					<!--END TABS-->
+				<!-- </div>
+				<div class="task-footer">
+					<div class="btn-arrow-link pull-right">
+						<a href="javascript:;">See More</a><br>
+					</div>
+				</div>
+			</div> -->
+			<!-- END PORTLET-->
+<!-- 		</div>
+	</div>
+ -->
+	<!-- <div class="row"> -->
+		<!-- <div class="col-md-6 col-sm-6"> -->
+			<!-- BEGIN REGIONAL STATS PORTLET-->
+<!-- 			<div class="portlet light ">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="icon-share font-green-haze"></i>
+						<span class="caption-subject font-green-haze bold uppercase">Recent Activities</span>
+					</div>
+					<div class="actions">
+						<div class="btn-group">
+							<a class="btn btn-sm btn-default btn-circle" href="#" data-toggle="dropdown" dropdown-menu-hover data-close-others="true">
+							Filter By <i class="fa fa-angle-down"></i>
+							</a>
+							<div class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+								<label><input type="checkbox"/> Finance</label>
+								<label><input type="checkbox" checked=""/> Membership</label>
+								<label><input type="checkbox"/> Customer Support</label>
+								<label><input type="checkbox" checked=""/> HR</label>
+								<label><input type="checkbox"/> System</label>
+							</div>
+						</div>
+						<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="#">
+						</a>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="scroller" style="height: 300px;" data-always-visible="1" data-rail-visible="0">
+						<ul class="feeds">
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-info">
+												<i class="fa fa-check"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												You have 4 pending tasks. <span class="label label-sm label-warning ">
+												Take action <i class="fa fa-share"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										Just now
+									</div>
+								</div>
+							</li>
+							<li>
+								<a href="#">
+									<div class="col1">
+										<div class="cont">
+											<div class="cont-col1">
+												<div class="label label-sm label-success">
+													<i class="fa fa-bar-chart-o"></i>
+												</div>
+											</div>
+											<div class="cont-col2">
+												<div class="desc">
+													Finance Report for year 2013 has been released.
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col2">
+										<div class="date">
+											20 mins
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-danger">
+												<i class="fa fa-user"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												You have 5 pending membership that requires a quick review.
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										24 mins
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-info">
+												<i class="fa fa-shopping-cart"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												New order received with <span class="label label-sm label-success">
+												Reference Number: DR23923 </span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										30 mins
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-success">
+												<i class="fa fa-user"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												You have 5 pending membership that requires a quick review.
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										24 mins
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-default">
+												<i class="fa fa-bell-o"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												Web server hardware needs to be upgraded. <span class="label label-sm label-default ">
+												Overdue </span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										2 hours
+									</div>
+								</div>
+							</li>
+							<li>
+								<a href="#">
+									<div class="col1">
+										<div class="cont">
+											<div class="cont-col1">
+												<div class="label label-sm label-default">
+													<i class="fa fa-briefcase"></i>
+												</div>
+											</div>
+											<div class="cont-col2">
+												<div class="desc">
+													IPO Report for year 2013 has been released.
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col2">
+										<div class="date">
+											20 mins
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-info">
+												<i class="fa fa-check"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												You have 4 pending tasks. <span class="label label-sm label-warning ">
+												Take action <i class="fa fa-share"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										Just now
+									</div>
+								</div>
+							</li>
+							<li>
+								<a href="#">
+									<div class="col1">
+										<div class="cont">
+											<div class="cont-col1">
+												<div class="label label-sm label-danger">
+													<i class="fa fa-bar-chart-o"></i>
+												</div>
+											</div>
+											<div class="cont-col2">
+												<div class="desc">
+													Finance Report for year 2013 has been released.
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col2">
+										<div class="date">
+											20 mins
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-default">
+												<i class="fa fa-user"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												You have 5 pending membership that requires a quick review.
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										24 mins
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-info">
+												<i class="fa fa-shopping-cart"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												New order received with <span class="label label-sm label-success">
+												Reference Number: DR23923 </span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										30 mins
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-success">
+												<i class="fa fa-user"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												You have 5 pending membership that requires a quick review.
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										24 mins
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-warning">
+												<i class="fa fa-bell-o"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												Web server hardware needs to be upgraded. <span class="label label-sm label-default ">
+												Overdue </span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										2 hours
+									</div>
+								</div>
+							</li>
+							<li>
+								<a href="#">
+									<div class="col1">
+										<div class="cont">
+											<div class="cont-col1">
+												<div class="label label-sm label-info">
+													<i class="fa fa-briefcase"></i>
+												</div>
+											</div>
+											<div class="cont-col2">
+												<div class="desc">
+													IPO Report for year 2013 has been released.
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col2">
+										<div class="date">
+											20 mins
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="scroller-footer">
+						<div class="btn-arrow-link pull-right">
+							<a href="#">See All Records</a>
+							<i class="icon-arrow-right"></i>
+						</div>
+					</div>
+				</div>
+			</div> -->
+			<!-- END REGIONAL STATS PORTLET-->
+		<!-- </div> -->
+		<!-- <div class="col-md-6 col-sm-6"> -->
+			<!-- BEGIN PORTLET-->
+			<!-- <div class="portlet light">
+				<div class="portlet-title">
+					<div class="caption caption-md">
+						<i class="icon-bar-chart font-green-haze"></i>
+						<span class="caption-subject font-green-haze bold uppercase">Customer Support</span>
+						<span class="caption-helper">45 pending</span>
+					</div>
+					<div class="inputs">
+						<div class="portlet-input input-inline input-small ">
+							<div class="input-icon right">
+								<i class="icon-magnifier"></i>
+								<input type="text" class="form-control form-control-solid" placeholder="search...">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="scroller" style="height: 329px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+						<div class="general-item-list">
+							<div class="item">
+								<div class="item-head">
+									<div class="item-details">
+										<img class="item-pic" src="/assets/admin/layout/img/avatar4.jpg">
+										<a href="" class="item-name primary-link">Nick Larson</a>
+										<span class="item-label">3 hrs ago</span>
+									</div>
+									<span class="item-status"><span class="badge badge-empty badge-success"></span> Open</span>
+								</div>
+								<div class="item-body">
+									Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-head">
+									<div class="item-details">
+										<img class="item-pic" src="/assets/admin/layout/img/avatar3.jpg">
+										<a href="" class="item-name primary-link">Mark</a>
+										<span class="item-label">5 hrs ago</span>
+									</div>
+									<span class="item-status"><span class="badge badge-empty badge-warning"></span> Pending</span>
+								</div>
+								<div class="item-body">
+									Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat tincidunt ut laoreet.
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-head">
+									<div class="item-details">
+										<img class="item-pic" src="/assets/admin/layout/img/avatar6.jpg">
+										<a href="" class="item-name primary-link">Nick Larson</a>
+										<span class="item-label">8 hrs ago</span>
+									</div>
+									<span class="item-status"><span class="badge badge-empty badge-primary"></span> Closed</span>
+								</div>
+								<div class="item-body">
+									Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh.
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-head">
+									<div class="item-details">
+										<img class="item-pic" src="/assets/admin/layout/img/avatar7.jpg">
+										<a href="" class="item-name primary-link">Nick Larson</a>
+										<span class="item-label">12 hrs ago</span>
+									</div>
+									<span class="item-status"><span class="badge badge-empty badge-danger"></span> Pending</span>
+								</div>
+								<div class="item-body">
+									Consectetuer adipiscing elit Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-head">
+									<div class="item-details">
+										<img class="item-pic" src="/assets/admin/layout/img/avatar9.jpg">
+										<a href="" class="item-name primary-link">Richard Stone</a>
+										<span class="item-label">2 days ago</span>
+									</div>
+									<span class="item-status"><span class="badge badge-empty badge-danger"></span> Open</span>
+								</div>
+								<div class="item-body">
+									Lorem ipsum dolor sit amet, consectetuer adipiscing elit, ut laoreet dolore magna aliquam erat volutpat.
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-head">
+									<div class="item-details">
+										<img class="item-pic" src="/assets/admin/layout/img/avatar8.jpg">
+										<a href="" class="item-name primary-link">Dan</a>
+										<span class="item-label">3 days ago</span>
+									</div>
+									<span class="item-status"><span class="badge badge-empty badge-warning"></span> Pending</span>
+								</div>
+								<div class="item-body">
+									Lorem ipsum dolor sit amet, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+								</div>
+							</div>
+							<div class="item">
+								<div class="item-head">
+									<div class="item-details">
+										<img class="item-pic" src="/assets/admin/layout/img/avatar2.jpg">
+										<a href="" class="item-name primary-link">Larry</a>
+										<span class="item-label">4 hrs ago</span>
+									</div>
+									<span class="item-status"><span class="badge badge-empty badge-success"></span> Open</span>
+								</div>
+								<div class="item-body">
+									Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+			<!-- END PORTLET-->
+		<!-- </div> -->
+	<!-- </div> -->
+
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
+<script>
+	// Index.init();    
+	// Tasks.initDashboardWidget();
+</script>
+<!-- BEGIN MAIN JS & CSS
